@@ -144,7 +144,7 @@ POST /createForm
 
 ::: details `POST /editForm`
 
-Create new form.
+Edit your form.
 
 #### Example Request
 
@@ -156,8 +156,6 @@ POST /editForm
     
     "emoji": "📝",
     "name": "My Form",
-    
-    "author": 63121552,
     
     "questions": [
         {
@@ -195,6 +193,42 @@ POST /editForm
             }
         }
     ]
+}
+```
+
+:::
+
+
+::: details `POST /respondToForm`
+
+Create new form.
+
+#### Example Request
+
+```http request
+POST /respondToForm
+
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    
+    "answers": [
+        {
+            "id": "123e4567-e89b-12d3-a456-426614174001",
+            "content": ["John Doe"]
+        },
+        {
+            "id": "123e4567-e89b-12d3-a456-426614174002",
+            "content": ["S", "XL"]
+        }
+    ] 
+}
+```
+
+#### Example Response
+
+```json
+{
+    "status": "OK"
 }
 ```
 
