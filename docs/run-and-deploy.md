@@ -30,19 +30,21 @@ docker-compose up --build
 ```
 to run the app. It will be available at `localhost:8080` – both the frontend and backend.
 
-## Deploying
-
-### As a single service (recommended)
-Configuration above is already suitable for production. Just do the same steps as for running locally, but on your server.
+This configuration is already suitable for production. Just do the same steps as for running locally, but on your server.
 
 You may wish to make your app available not only on 8080 port, but in 80 or 443. In this case, you can set up reverse proxy like [nginx](https://nginx.org/en/docs/beginners_guide.html). For example, with such config:
-```nginx
-server {
-    listen 80;
-    server_name your_domain.com;
 
-    location / {
-        proxy_pass http://localhost:8080;
+```nginx
+events {}
+
+http {
+    server {
+        listen 80;
+        server_name your-domain.com;
+
+        location / {
+            proxy_pass http://localhost:8080;
+        }
     }
 }
 ```
@@ -50,4 +52,19 @@ server {
 As an alternative, you can just edit `compose.yml` and change target port.
 
 
-### Deploying frontend separately
+### Running frontend separately
+
+1. Install Node.js 18 or higher.
+2. Change working directory to `frontend` (`cd frontend`)
+3. Run `npm install`, then `npm run dev` to run the app locally.
+4. Run `npm run build` to build the app for production. The result will be in `frontend/dist` directory.
+5. Run `npm run serve` to serve the app locally at `localhost:3000`.
+
+### Running backend separately
+
+1. Create `env` file as described above.
+2. Install Golang 1.18 or higher.
+3. Change working directory to `backend` (`cd backend`)
+4. Place frontend build from `frontend/dist` to `backend/frontend-build` directory (it is served from the backend app).
+5. Run `go run main.go` to run the app locally.
+

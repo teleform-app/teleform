@@ -5,14 +5,14 @@ outline: deep
 # API Documentation
 
 
-::: details `GET /getForm`
+::: details `GET /api/getForm`
 
 Get form by ID.
 
 #### Example Request
 
 ```http request
-GET /getForm?form_id=123e4567-e89b-12d3-a456-426614174000
+GET /api/getForm?form_id=123e4567-e89b-12d3-a456-426614174000
 ```
 
 #### Example Response
@@ -56,14 +56,14 @@ GET /getForm?form_id=123e4567-e89b-12d3-a456-426614174000
 
 :::
 
-::: details `GET /getMyForms`
+::: details `GET /api/getMyForms`
 
 Get all forms created by the current user.
 
 #### Example Request
 
 ```http request
-GET /getMyForms
+GET /api/getMyForms
 ```
 
 #### Example Response
@@ -110,14 +110,14 @@ GET /getMyForms
 :::
 
 
-::: details `POST /createForm`
+::: details `POST /api/createForm`
 
 Create new form.
 
 #### Example Request
 
 ```http request
-POST /createForm
+POST /api/createForm
 
 {
    "title": "My Form",
@@ -142,14 +142,14 @@ POST /createForm
 :::
 
 
-::: details `POST /editForm`
+::: details `POST /api/editForm`
 
 Edit your form.
 
 #### Example Request
 
 ```http request
-POST /editForm
+POST /api/editForm
 
 {
     "id": "123e4567-e89b-12d3-a456-426614174000",
@@ -199,14 +199,14 @@ POST /editForm
 :::
 
 
-::: details `POST /respondToForm`
+::: details `POST /api/respondToForm`
 
 Create new form.
 
 #### Example Request
 
 ```http request
-POST /respondToForm
+POST /api/respondToForm
 
 {
     "id": "123e4567-e89b-12d3-a456-426614174000",
