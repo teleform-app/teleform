@@ -2,14 +2,26 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"teleform/methods"
+	"time"
 )
 
 func main() {
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length", "Content-Disposition"},
+		AllowCredentials: true,
+
+		MaxAge: 2 * time.Hour,
+	}))
 
 	if err := router.SetTrustedProxies(getCloudflareIPRanges()); err != nil {
 		panic(err)

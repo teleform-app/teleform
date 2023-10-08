@@ -1,18 +1,17 @@
-import styles from "./style.module.css";
-
-import classNames from 'classnames/bind'
-import {FC} from "react";
-
-const cx = classNames.bind(styles)
+import { FC } from "react";
+import {
+  TitleText,
+  TitleWrapper,
+} from "pages/FormList/Components/Title/styles.tsx";
 
 interface TitleProps {
-    text: string
+  text: string;
 }
 
-export const Title: FC<TitleProps> = ({text}) => {
-    return (
-        <div className={cx('wrapper')}>
-            <div className={cx('text')}>{text}</div>
-        </div>
-    );
+export const Title: FC<TitleProps> = ({ text }) => {
+  return (
+    <TitleWrapper>
+      <TitleText>{text}</TitleText>
+    </TitleWrapper>
+  );
 };

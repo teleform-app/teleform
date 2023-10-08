@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
 import "sanitize.css";
 import "./index.css";
-import { AppRouter } from "./router.tsx";
+import { App } from "./components/App";
+import "./telegram";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={AppRouter} />
+    <App />
   </React.StrictMode>,
 );

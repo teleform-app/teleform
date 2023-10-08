@@ -7,10 +7,13 @@ export interface Form {
 
 export type FormPreview = Pick<Form, "name" | "emoji" | "participants">;
 
-export type FormQuestionType = "text" | "name" | "email" | "phone" | "poll";
+export type FormQuestionType = "text" | "name" | "email" | "phone" | "select";
 export interface FormQuestion {
   type: FormQuestionType;
   title: string;
-
+  mandatory?: boolean;
+  multichoice?: boolean;
   options?: string[];
 }
+
+export type FormQuestionAnswer = string | string[];

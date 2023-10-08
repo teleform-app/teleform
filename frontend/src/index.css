@@ -1,8 +1,14 @@
 body {
-    background: var(--background);
+    background: var(--tg-theme-secondary-bg-color);
 }
 
 :root {
     --font-regular: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --background: #EFEEF4;
+    --tg-theme-bg-color: #EFEEF4;
+    --tg-theme-secondary-bg-color: #FFFFFF;
+    --tg-theme-text-color: #000000;
+    --tg-theme-hint-color: #3c3c4399;
+    --tg-theme-button-color: #007AFF;
+    --tg-theme-button-text-color: white;
+    --accent: var(--tg-theme-button-color);
 }

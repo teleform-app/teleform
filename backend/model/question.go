@@ -21,6 +21,20 @@ type QuestionContentRegularInput struct {
 	Placeholder string `json:"placeholder" bson:"placeholder"`
 }
 
+const QuestionTypeEmail QuestionType = "email"
+
+type QuestionContentEmail struct {
+	Text        string `json:"question" bson:"question"`
+	Placeholder string `json:"placeholder" bson:"placeholder"`
+}
+
+const QuestionTypePhone QuestionType = "phone"
+
+type QuestionContentPhone struct {
+	Text        string `json:"question" bson:"question"`
+	Placeholder string `json:"placeholder" bson:"placeholder"`
+}
+
 const QuestionTypeSelector QuestionType = "selector"
 
 type QuestionContentSelector struct {

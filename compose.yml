@@ -8,6 +8,8 @@ services:
             - "8080:8080"
         environment:
             - GIN_MODE=release
+        env_file:
+            - env
         depends_on:
             - db
             - frontend

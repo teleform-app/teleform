@@ -1,12 +1,17 @@
-import styles from "./style.module.css";
-
-import classNames from "classnames/bind";
 import { FC } from "react";
 import { FormPreview } from "types/form.ts";
 
-import plusIcon from "./plus.svg";
-
-const cx = classNames.bind(styles);
+import {
+  ListElement,
+  ListEmoji,
+  ListFormName,
+  ListFormParticipants,
+  ListInfo,
+  ListNewForm,
+  ListNewFormTitle,
+  ListWrapper,
+} from "pages/FormList/Components/List/styles.tsx";
+import { PlusIcon } from "pages/FormList/Components/List/plus.tsx";
 
 interface ListProps {
   list: FormPreview[];
@@ -14,28 +19,28 @@ interface ListProps {
 
 export const List: FC<ListProps> = ({ list }) => {
   return (
-    <div className={cx("wrapper")}>
-      <div className={cx("element")}>
-        <div className={cx("emoji")}>
-          <img src={plusIcon} alt="+" />
-        </div>
-        <div className={cx("newFormInfo")}>
-          <div className={cx("newFormTitle")}>New form</div>
-        </div>
-      </div>
+    <ListWrapper>
+      <ListElement>
+        <ListEmoji>
+          <PlusIcon />
+        </ListEmoji>
+        <ListNewForm>
+          <ListNewFormTitle>New form</ListNewFormTitle>
+        </ListNewForm>
+      </ListElement>
       {list.map((poll) => (
-        <div className={cx("poll", "element")}>
-          <div className={cx("emoji")}>{poll.emoji}</div>
-          <div className={cx("info")}>
-            <div className={cx("name")}>{poll.name}</div>
-            <div className={cx("participants")}>
+        <ListElement>
+          <ListEmoji>{poll.emoji}</ListEmoji>
+          <ListInfo>
+            <ListFormName>{poll.name}</ListFormName>
+            <ListFormParticipants>
               {poll.participants === 0
                 ? "No responses"
                 : `${poll.participants} responses`}
-            </div>
-          </div>
-        </div>
+            </ListFormParticipants>
+          </ListInfo>
+        </ListElement>
       ))}
-    </div>
+    </ListWrapper>
   );
 };
