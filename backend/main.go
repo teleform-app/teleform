@@ -5,15 +5,22 @@ import (
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"teleform/methods"
 )
 
-var router = gin.Default()
-var api = router.Group("/api")
-
 func main() {
+	router := gin.Default()
+
 	if err := router.SetTrustedProxies(getCloudflareIPRanges()); err != nil {
 		panic(err)
 	}
+
+	api := router.Group("/api")
+
+	api.Use(twaAuthMiddleware)
+
+	api.GET("/getForm", methods.GetForm)
+	api.GET("/getMyForms", methods.GetMyForms)
 
 	router.Use(static.Serve("/", static.LocalFile("/app/frontend-build", false)))
 
