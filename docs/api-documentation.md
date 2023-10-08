@@ -4,11 +4,12 @@ outline: deep
 
 # API Documentation
 
-[[toc]]
 
-## `GET /getForm`
+::: details `GET /getForm`
 
-### Query parameters
+Get form by ID.
+
+#### Query parameters
 
 | Name      | Type   | Description                                   |
 |-----------|--------|-----------------------------------------------|
@@ -58,3 +59,5 @@ GET /getForm?form_id=123e4567-e89b-12d3-a456-426614174000
     ] 
 }
 ```
+
+:::
