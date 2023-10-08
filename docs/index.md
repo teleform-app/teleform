@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /markdown-examples
+      link: /api-documentation/
     - theme: alt
       text: View on GitHub
       link: https://github.com/teleform-app/teleform
