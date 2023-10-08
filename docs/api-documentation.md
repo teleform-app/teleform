@@ -9,19 +9,19 @@ outline: deep
 
 Get form by ID.
 
-#### Query parameters
+##### Query parameters
 
 | Name      | Type   | Description                                   |
 |-----------|--------|-----------------------------------------------|
 | `form_id` | `uuid` | **Required**. The ID of the form to retrieve. |
 
-#### Example Request
+##### Example Request
 
 ```http request
 GET /getForm?form_id=123e4567-e89b-12d3-a456-426614174000
 ```
 
-#### Example Response
+##### Example Response
 
 ```json
 {
