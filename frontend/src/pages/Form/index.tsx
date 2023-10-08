@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Form, FormQuestionAnswer } from "types/form.ts";
 import { FormElement } from "pages/Form/Components/FormElement";
 import { isValidEmail, isValidPhoneNumber } from "../../utils/validators.ts";
+import { FormSubmitted } from "pages/Form/Components/FormSubmited";
 
 const mockForm: Form = {
   name: "Registration to Readers Event 2023 (for Constructor University Students)",
@@ -49,6 +50,7 @@ export const FormPage = () => {
     {},
   );
   const [showError, setShowError] = useState<boolean>(false);
+  const [isSubmited, setIsSubmited] = useState<boolean>(false);
 
   const handleChange = (title: string, value: FormQuestionAnswer) => {
     setAnswers((prevState) => {
@@ -89,8 +91,12 @@ export const FormPage = () => {
   const submitForm = () => {
     if (isHaveErrors) {
       setShowError(true);
+    } else {
+      setIsSubmited(true);
     }
   };
+
+  if (isSubmited) return <FormSubmitted />;
 
   return (
     <FormWrapper>

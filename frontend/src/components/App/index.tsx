@@ -9,6 +9,7 @@ export const App = () => {
   useEffect(() => {
     telegram.setHeaderColor("secondary_bg_color");
     telegram.setBackgroundColor("secondary_bg_color");
+    telegram.ready();
   }, [telegram]);
 
   return <RouterProvider router={AppRouter} />;
