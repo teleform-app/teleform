@@ -4,7 +4,11 @@ import (
 	initdata "github.com/Telegram-Web-Apps/init-data-golang"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"net/http"
 	"teleform/db"
+	"teleform/model"
+	"teleform/utils"
+	"time"
 )
 
 func GetForm(c *gin.Context) {
@@ -14,7 +18,17 @@ func GetForm(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"form": formID})
+	form, err := db.GetForm(formID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+	} else {
+		c.JSON(200, gin.H{"form": form})
+	}
 }
 
 func GetMyForms(c *gin.Context) {
@@ -27,4 +41,39 @@ func GetMyForms(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"forms": forms})
+}
+
+func CreateForm(c *gin.Context) {
+	var body struct {
+		Title string `json:"title" binding:"required" validate:"min=1,max=100"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	form := model.Form{
+		ID:        uuid.New(),
+		Author:    initData.User.ID,
+		Emoji:     utils.RandomEmoji(),
+		Title:     body.Title,
+		CreatedAt: time.Now(),
+		Questions: make([]model.Question, 0),
+	}
+
+	if err := db.UpsertForm(&form); err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	c.JSON(200, gin.H{"form": form})
+}
+
+func UpdateForm(c *gin.Context) {
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	c.JSON(http.StatusOK, initData)
 }

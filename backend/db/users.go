@@ -5,6 +5,7 @@ import (
 	"errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"teleform/model"
 )
 
@@ -26,4 +27,9 @@ func GetUser(id int) (*model.User, error) {
 	default:
 		return nil, err
 	}
+}
+
+func UpsertUser(user *model.User) error {
+	_, err := collectionUsers.UpdateOne(context.Background(), bson.D{{"_id", user.ID}}, bson.D{{"$set", user}}, options.Update().SetUpsert(true))
+	return err
 }

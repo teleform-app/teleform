@@ -26,5 +26,5 @@ const QuestionTypeSelector QuestionType = "selector"
 type QuestionContentSelector struct {
 	Text        string   `json:"question" bson:"question"`
 	Multichoice bool     `json:"multichoice" bson:"multichoice"`
-	Choices     []string `json:"choices" bson:"choices"`
+	Options     []string `json:"options" bson:"options"`
 }

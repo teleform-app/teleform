@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"teleform/model"
 )
 
@@ -26,7 +27,7 @@ func GetForm(id uuid.UUID) (*model.Form, error) {
 }
 
 func GetFormsByUser(id int64) ([]model.Form, error) {
-	var forms []model.Form
+	var forms = make([]model.Form, 0)
 
 	cursor, err := collectionForms.Find(context.Background(), bson.D{{"author", id}})
 	if err != nil {
@@ -38,4 +39,9 @@ func GetFormsByUser(id int64) ([]model.Form, error) {
 	}
 
 	return forms, nil
+}
+
+func UpsertForm(form *model.Form) error {
+	_, err := collectionForms.UpdateOne(context.Background(), bson.D{{"_id", form.ID}}, bson.D{{"$set", form}}, options.Update().SetUpsert(true))
+	return err
 }
