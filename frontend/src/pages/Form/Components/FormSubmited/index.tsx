@@ -24,13 +24,7 @@ export const FormSubmitted = () => {
       <FormSubmittedDescription>
         You can close this window now, answers are saved
       </FormSubmittedDescription>
-      <FormSubmittedShare
-        onClick={() => {
-          navigator.share("https://t.me/nocell");
-        }}
-      >
-        Share this form
-      </FormSubmittedShare>
+      <FormSubmittedShare>Share this form</FormSubmittedShare>
     </FormSubmittedWrapper>
   );
 };
