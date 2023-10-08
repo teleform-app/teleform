@@ -4,7 +4,7 @@ outline: deep
 
 # API Documentation
 
----
+[[toc]]
 
 ## `GET /getForm`
 
