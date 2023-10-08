@@ -22,7 +22,8 @@ GET /api/getForm?form_id=123e4567-e89b-12d3-a456-426614174000
     "id": "123e4567-e89b-12d3-a456-426614174000",
     
     "emoji": "📝",
-    "name": "My Form",
+    "title": "My Form",
+    "created_at": "2023-10-08T18:55:24.096845335Z",
     
     "author": 63121552,
     
@@ -74,7 +75,8 @@ GET /api/getMyForms
         "id": "123e4567-e89b-12d3-a456-426614174000",
         
         "emoji": "📝",
-        "name": "My Form",
+        "title": "My Form",
+        "created_at": "2023-10-08T18:55:24.096845335Z",
         
         "author": 63121552,
         
@@ -131,7 +133,8 @@ POST /api/createForm
     "id": "123e4567-e89b-12d3-a456-426614174000",
     
     "emoji": "📝",
-    "name": "My Form",
+    "title": "My Form",
+    "created_at": "2023-10-08T18:55:24.096845335Z",
     
     "author": 63121552,
     
@@ -155,7 +158,8 @@ POST /api/editForm
     "id": "123e4567-e89b-12d3-a456-426614174000",
     
     "emoji": "📝",
-    "name": "My Form",
+    "title": "My Form",
+    "created_at": "2023-10-08T18:55:24.096845335Z",
     
     "questions": [
         {
@@ -178,7 +182,8 @@ POST /api/editForm
     "id": "123e4567-e89b-12d3-a456-426614174000",
 
     "emoji": "📝",
-    "name": "My Form",
+    "title": "My Form",
+    "created_at": "2023-10-08T18:55:24.096845335Z",
 
     "author": 63121552,
 
