@@ -114,3 +114,35 @@ GET /getMyForms
 ```
 
 :::
+
+
+::: details `POST /createForm`
+
+Create new form.
+
+#### Example Request
+
+```http request
+POST /createForm
+
+{
+   "title": "My Form",
+}
+```
+
+#### Example Response
+
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    
+    "emoji": "📝",
+    "name": "My Form",
+    
+    "author": 63121552,
+    
+    "questions": [] 
+}
+```
+
+:::
