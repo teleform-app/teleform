@@ -1,0 +1,75 @@
+.wrapper {
+    border-radius: 10px;
+    background: #FFFFFF;
+    margin: 16px;
+
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+}
+
+.newFormInfo {
+    height: 57px;
+    display: flex;
+    align-items: center;
+}
+
+.newFormTitle {
+    color: #007aff;
+    font-family: var(--font-regular);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.element {
+    display: flex;
+    align-items: center;
+
+    & + & {
+        .info {
+            border-top: 0.5px solid #3C3C435C;
+        }
+    }
+}
+
+.poll {
+}
+
+.info {
+    width: 100%;
+}
+
+.emoji {
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font-regular);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.name {
+    color: #000000;
+    font-family: var(--font-regular);
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 400;
+    margin-right: 16px;
+    margin-top: 8px
+}
+
+.participants {
+    color: #3c3c4399;
+    font-family: var(--font-regular);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+
+    margin-top: 2px;
+    margin-bottom: 8px;
+}
