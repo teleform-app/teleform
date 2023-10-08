@@ -6,16 +6,20 @@ export default defineConfig({
   description: "Docs for the Telegram Mini App called Teleform – an app for creating feedback forms.",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'API', link: '/api-documentation' }
-    ],
+    //nav: [
+    //  { text: 'Home', link: '/' },
+    //  { text: 'API', link: '/api-documentation' }
+    // ],
 
     sidebar: [
       {
-        text: 'Guides',
         items: [
           { text: 'Running & Deploying', link: '/run-and-deploy' },
+        ]
+      },
+      {
+        text: 'Backend',
+        items: [
           { text: 'API Documentation', link: '/api-documentation' }
         ]
       },
