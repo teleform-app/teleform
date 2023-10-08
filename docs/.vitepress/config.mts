@@ -13,11 +13,12 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: 'Backend',
+        text: 'Guides',
         items: [
+          { text: 'Running & Deploying', link: '/run-and-deploy' },
           { text: 'API Documentation', link: '/api-documentation' }
         ]
-      }
+      },
     ],
 
     socialLinks: [
