@@ -1,6 +1,6 @@
 module teleform
 
-go 1.21
+go 1.18
 
 require (
 	github.com/Telegram-Web-Apps/init-data-golang v1.1.1 // indirect
