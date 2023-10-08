@@ -4,13 +4,13 @@ outline: deep
 
 # Running and Deploying
 
-**[Github repository](https:://github.com/teleform-app/teleform)**
+**[GitHub repository](https://github.com/teleform-app/teleform)**
 
 The Teleform code is organized as a monorepo, with the following structure:
 
-* `frontend` - frontend app, written in React
-* `backend` - backend app, written in Golang
-* `docs` - this documentation, written on Vitepress
+* [`frontend`](https://github.com/teleform-app/teleform/tree/main/frontend) - frontend app, written in React
+* [`backend`](https://github.com/teleform-app/teleform/tree/main/backend) - backend app, written in Golang
+* [`docs`](https://github.com/teleform-app/teleform/tree/main/docs) - this documentation, written on Vitepress
 
 There is two ways to run, deploy and develop Teleform: as a single service with Docker Compose or as a separate frontend and backend.
 
