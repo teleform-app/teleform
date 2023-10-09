@@ -100,10 +100,10 @@ func EditForm(c *gin.Context) {
 	body.Author = initData.User.ID
 	body.CreatedAt = form.CreatedAt
 
-	if err := db.UpsertForm(form); err != nil {
+	if err := db.UpsertForm(&body); err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return
 	}
 
-	c.JSON(http.StatusOK, initData)
+	c.JSON(http.StatusOK, body)
 }
