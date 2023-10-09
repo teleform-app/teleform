@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useTelegram } from "../../hooks/useTelegram.ts";
+import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
 import { RouterProvider } from "react-router-dom";
 import { AppRouter } from "../../router.tsx";
 
 export const App = () => {
-  const telegram = useTelegram();
+  const telegram = useTelegramWebApp();
 
   useEffect(() => {
     telegram.setHeaderColor("secondary_bg_color");

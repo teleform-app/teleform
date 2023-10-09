@@ -12,12 +12,16 @@ import {
   ListWrapper,
 } from "pages/FormList/Components/List/styles.tsx";
 import { PlusIcon } from "pages/FormList/Components/List/plus.tsx";
+import { Link, useNavigate } from "react-router-dom";
+import { AppRouter } from "../../../../router.tsx";
 
 interface ListProps {
   list: FormPreview[];
 }
 
 export const List: FC<ListProps> = ({ list }) => {
+  const navigate = useNavigate();
+
   return (
     <ListWrapper>
       <ListElement>
@@ -28,15 +32,20 @@ export const List: FC<ListProps> = ({ list }) => {
           <ListNewFormTitle>New form</ListNewFormTitle>
         </ListNewForm>
       </ListElement>
-      {list.map((poll) => (
-        <ListElement>
-          <ListEmoji>{poll.emoji}</ListEmoji>
+      {list.map((question) => (
+        <ListElement
+          onClick={() => {
+            console.log(question.id);
+            navigate(`/form/${question.id}`);
+          }}
+        >
+          <ListEmoji>{question.emoji}</ListEmoji>
           <ListInfo>
-            <ListFormName>{poll.name}</ListFormName>
+            <ListFormName>{question.title}</ListFormName>
             <ListFormParticipants>
-              {poll.participants === 0
+              {question.participants === 0
                 ? "No responses"
-                : `${poll.participants} responses`}
+                : `${question.participants} responses`}
             </ListFormParticipants>
           </ListInfo>
         </ListElement>

@@ -10,9 +10,13 @@ import { Form, FormQuestionAnswer } from "types/form.ts";
 import { FormElement } from "pages/Form/Components/FormElement";
 import { isValidEmail, isValidPhoneNumber } from "../../utils/validators.ts";
 import { FormSubmitted } from "pages/Form/Components/FormSubmited";
+import { useGetForm } from "../../hooks/useApi.ts";
+import { useParams } from "react-router-dom";
+import { useBackButton } from "../../hooks/useBackButton.ts";
 
 const mockForm: Form = {
-  name: "Registration to Readers Event 2023 (for Constructor University Students)",
+  title:
+    "Registration to Readers Event 2023 (for Constructor University Students)",
   emoji: "📚",
   participants: 0,
   questions: [
@@ -45,12 +49,17 @@ const mockForm: Form = {
   ],
 };
 export const FormPage = () => {
-  const [form] = useState<Form>(mockForm);
+  const { id } = useParams();
+
+  const { data } = useGetForm(id as string);
+
   const [answers, setAnswers] = useState<Record<string, FormQuestionAnswer>>(
     {},
   );
   const [showError, setShowError] = useState<boolean>(false);
   const [isSubmited, setIsSubmited] = useState<boolean>(false);
+
+  useBackButton(false);
 
   const handleChange = (title: string, value: FormQuestionAnswer) => {
     setAnswers((prevState) => {
@@ -58,6 +67,10 @@ export const FormPage = () => {
     });
     setShowError(false);
   };
+  if (data === undefined) {
+    return null;
+  }
+  const { form } = data;
 
   if (!form) {
     return "kek";
@@ -102,7 +115,7 @@ export const FormPage = () => {
     <FormWrapper>
       <FormHeader>
         <FormEmoji>📚</FormEmoji>
-        <FormTitle>{form.name}</FormTitle>
+        <FormTitle>{form.title}</FormTitle>
       </FormHeader>
       {form.questions.map((question) => (
         <FormElement

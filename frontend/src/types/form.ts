@@ -1,11 +1,12 @@
 export interface Form {
-  name: string;
+  id: string;
+  title: string;
   emoji: string;
   participants: number;
   questions: FormQuestion[];
 }
 
-export type FormPreview = Pick<Form, "name" | "emoji" | "participants">;
+export type FormPreview = Pick<Form, "id" | "title" | "emoji" | "participants">;
 
 export type FormQuestionType = "text" | "name" | "email" | "phone" | "select";
 export interface FormQuestion {

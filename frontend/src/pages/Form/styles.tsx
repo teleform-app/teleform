@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const FormWrapper = styled.div`
   margin: 25px 7px;
+
+  text-decoration: none;
 `;
 
 export const FormHeader = styled.div`

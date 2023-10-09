@@ -1,4 +1,4 @@
-export const useTelegram = () => {
+export const useTelegramWebApp = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   if (window.Telegram) {

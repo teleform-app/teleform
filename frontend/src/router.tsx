@@ -7,7 +7,7 @@ export const AppRouter = createBrowserRouter([
     element: <PollList />,
   },
   {
-    path: "/form",
+    path: "/form/:id",
     element: <FormPage />,
   },
 ]);

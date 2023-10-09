@@ -1,31 +1,36 @@
 import { Title } from "./Components/Title";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormPreview } from "types/form.ts";
 import { List } from "./Components/List";
-import { useTelegram } from "../../hooks/useTelegram.ts";
+import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
 import { Link } from "react-router-dom";
+import { useMyForms } from "../../hooks/useApi.ts";
+import { useBackButton } from "../../hooks/useBackButton.ts";
 
 export const PollList = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [list] = useState<FormPreview[]>([
-    {
-      name: "Delivery of prizes from contest",
-      emoji: "📦",
-      participants: 362,
-    },
-    {
-      name: "Registration to Readers Event 2023 (for Constructor University Students)",
-      emoji: "📚",
-      participants: 0,
-    },
-  ]);
 
-  const telegram = useTelegram();
+  const { data } = useMyForms();
+
+  const telegram = useTelegramWebApp();
+
+  useBackButton(true);
+
+  useEffect(() => {
+    const { start_param } = telegram.initDataUnsafe;
+    if (start_param) {
+      window.location.href = `/form/${start_param}`;
+    }
+  }, [telegram]);
+
+  if (data === undefined) {
+    return null;
+  }
 
   return (
     <div>
       <Title text={"My forms"} />
-      <List list={list} />
+      <List list={data.forms} />
       <span
         style={{
           color: "white",
