@@ -1,6 +1,5 @@
 import { Title } from "./Components/Title";
-import { useEffect, useState } from "react";
-import { FormPreview } from "types/form.ts";
+import { useEffect } from "react";
 import { List } from "./Components/List";
 import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
 import { Link } from "react-router-dom";

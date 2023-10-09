@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
-export const FormSelectWrapper = styled.div`
+export const FormSelectWrapper = styled.div<{ background?: string }>`
   border-radius: 10px;
-  background: var(--tg-theme-secondary-bg-color);
-
-  margin: 12px 16px;
-  margin-top: 0;
+  background: ${(props) =>
+    props.background ? props.background : "var(--tg-theme-secondary-bg-color)"};
 `;
 
 export const FormSelectOption = styled.div`
@@ -17,7 +15,7 @@ export const FormSelectOption = styled.div`
   user-select: none;
 
   & + & {
-    border-top: 0.5px solid #3c3c435c;
+    border-top: 0.5px solid var(--separator-color);
   }
 `;
 

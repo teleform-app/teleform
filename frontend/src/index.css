@@ -11,4 +11,5 @@ body {
     --tg-theme-button-color: #007AFF;
     --tg-theme-button-text-color: white;
     --accent: var(--tg-theme-button-color);
+    --separator-color: #3c3c435c;
 }

@@ -8,6 +8,8 @@ export const FormElementWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
+  padding: 12px 16px;
+
   & + & {
     margin-top: 16px;
   }
@@ -20,7 +22,7 @@ export const FormElementTitle = styled.div`
   font-style: normal;
   font-weight: 500;
 
-  margin: 12px 16px;
+  margin: 0 16px;
 `;
 
 export const FormElementInput = styled.input<{ error?: boolean }>`
@@ -40,6 +42,6 @@ export const FormElementInput = styled.input<{ error?: boolean }>`
   font-style: normal;
   font-weight: 400;
 
-  margin: 12px 16px;
+  margin: 0 16px;
   margin-top: 0;
 `;

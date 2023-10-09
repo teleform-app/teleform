@@ -13,6 +13,7 @@ interface FormSelectProps {
   options: string[];
   multichoice?: boolean;
   onChange?: (name: string, value: string | string[]) => void;
+  background?: string;
 }
 
 export const FormSelect: FC<FormSelectProps> = ({
@@ -20,6 +21,7 @@ export const FormSelect: FC<FormSelectProps> = ({
   options,
   multichoice = false,
   onChange,
+  background,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -47,7 +49,7 @@ export const FormSelect: FC<FormSelectProps> = ({
   }, [name, selectedOptions]);
 
   return (
-    <FormSelectWrapper>
+    <FormSelectWrapper background={background}>
       {options.map((option) => (
         <FormSelectOption
           onClick={() => {
