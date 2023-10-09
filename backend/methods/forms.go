@@ -73,10 +73,7 @@ func CreateForm(c *gin.Context) {
 }
 
 func EditForm(c *gin.Context) {
-	var body struct {
-		FormID    uuid.UUID        `json:"form_id" binding:"required"`
-		Questions []model.Question `json:"questions" binding:"required" validate:"max=100"`
-	}
+	var body model.Form
 
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, gin.H{"error": "invalid body"})
@@ -85,7 +82,7 @@ func EditForm(c *gin.Context) {
 
 	initData := c.MustGet("init_data").(*initdata.InitData)
 
-	form, err := db.GetForm(body.FormID)
+	form, err := db.GetForm(body.ID)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return
@@ -99,7 +96,9 @@ func EditForm(c *gin.Context) {
 		return
 	}
 
-	form.Questions = body.Questions
+	// Form fields that can not be edited
+	body.Author = initData.User.ID
+	body.CreatedAt = form.CreatedAt
 
 	if err := db.UpsertForm(form); err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
