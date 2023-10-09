@@ -72,7 +72,7 @@ func CreateForm(c *gin.Context) {
 	c.JSON(200, gin.H{"form": form})
 }
 
-func UpdateForm(c *gin.Context) {
+func EditForm(c *gin.Context) {
 	var body struct {
 		FormID    uuid.UUID        `json:"form_id" binding:"required"`
 		Questions []model.Question `json:"questions" binding:"required" validate:"max=100"`
