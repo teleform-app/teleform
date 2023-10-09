@@ -72,8 +72,38 @@ func CreateForm(c *gin.Context) {
 	c.JSON(200, gin.H{"form": form})
 }
 
-func UpdateForm(c *gin.Context) {
+func EditForm(c *gin.Context) {
+	var body model.Form
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
 	initData := c.MustGet("init_data").(*initdata.InitData)
 
-	c.JSON(http.StatusOK, initData)
+	form, err := db.GetForm(body.ID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	}
+
+	if form.Author != initData.User.ID {
+		c.JSON(403, gin.H{"error": "you are not the author of this form"})
+		return
+	}
+
+	// Form fields that can not be edited
+	body.Author = initData.User.ID
+	body.CreatedAt = form.CreatedAt
+
+	if err := db.UpsertForm(&body); err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, body)
 }

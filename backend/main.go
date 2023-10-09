@@ -34,7 +34,7 @@ func main() {
 	api.GET("/getForm", methods.GetForm)
 	api.GET("/getMyForms", methods.GetMyForms)
 	api.POST("/createForm", methods.CreateForm)
-	api.POST("/updateForm", methods.UpdateForm)
+	api.POST("/editForm", methods.EditForm)
 
 	router.Use(static.Serve("/", static.LocalFile("/app/frontend-build", false)))
 

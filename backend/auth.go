@@ -10,28 +10,12 @@ import (
 	"time"
 )
 
-var botToken = os.Getenv("BOT_TOKEN")
+var botToken = os.Getenv("TELEGRAM_BOT_TOKEN")
+var skipValidation = os.Getenv("SKIP_VALIDATION") == "true"
 
 func twaAuthMiddleware(c *gin.Context) {
 	// Raw init data from the request header (https://docs.twa.dev/docs/launch-params/init-data).
 	initData := c.GetHeader("X-Init-Data")
-
-	if initData == "" {
-		c.Set("init_data", &initdata.InitData{
-			User: &initdata.User{
-				FirstName:    "S",
-				ID:           1,
-				IsBot:        false,
-				IsPremium:    true,
-				LastName:     "",
-				Username:     "@sadfun",
-				LanguageCode: "ru",
-				PhotoURL:     "",
-			},
-		})
-		c.Next()
-		return
-	}
 
 	if initData == "" {
 		c.JSON(400, gin.H{"error": "please pass signed init data in the X-Init-Data header"})
@@ -42,10 +26,12 @@ func twaAuthMiddleware(c *gin.Context) {
 	// How long the init data is valid
 	expIn := 24 * time.Hour
 
-	if err := initdata.Validate(initData, botToken, expIn); err != nil {
-		c.JSON(400, gin.H{"error": fmt.Sprintf("can't validate init data: %s", err.Error())})
-		c.Abort()
-		return
+	if !skipValidation {
+		if err := initdata.Validate(initData, botToken, expIn); err != nil {
+			c.JSON(400, gin.H{"error": fmt.Sprintf("can't validate init data: %s", err.Error())})
+			c.Abort()
+			return
+		}
 	}
 
 	data, err := initdata.Parse(initData)
