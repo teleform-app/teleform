@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var botToken = os.Getenv("BOT_TOKEN")
+var botToken = os.Getenv("TELEGRAM_BOT_TOKEN")
 
 func twaAuthMiddleware(c *gin.Context) {
 	// Raw init data from the request header (https://docs.twa.dev/docs/launch-params/init-data).
