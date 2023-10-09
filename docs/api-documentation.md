@@ -10,7 +10,7 @@ Backend of Teleform is written in Go and uses [Gin](https://github.com/gin-gonic
 
 To authorize, just pass [**signed init data**](https://docs.twa.dev/docs/launch-params/init-data) in `X-Init-Data` HTTP header:
 ```http request
-X-Init-Data=query_id=AAHdF6IQAAAAAN0XohDhrOrc&...
+X-Init-Data: query_id=AAHdF6IQAAAAAN0XohDhrOrc&...
 ```
 
 If you set environment variable `SKIP_INIT_DATA_VALIDATION` to `true`, backend will trust this data without checking signature.
