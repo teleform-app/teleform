@@ -287,30 +287,7 @@ Get responses to your form.
 POST /api/getFormResponses
 
 {
-    "responses": [
-        {
-        "form_id": "123e4567-e89b-12d3-a456-426614174000",
-    
-        "user_id": 63121552,
-        
-        "answers": [
-            {
-                "id": "123e4567-e89b-12d3-a456-426614174001",
-                "content": ["John Doe"]
-            },
-            {
-                "id": "123e4567-e89b-12d3-a456-426614174002",
-                "content": ["S", "XL"]
-            }
-        ]
-   ]
-   
-   "users": {
-         "63121552": {
-              "name": "John Doe",
-              "avatar": "https://example.com/avatar.png"
-         }
-   }
+    "form_id": "123e4567-e89b-12d3-a456-426614174000",
 }
 ```
 
@@ -318,7 +295,31 @@ POST /api/getFormResponses
 
 ```json
 {
-    "status": "ok"
+    "responses": [
+        {
+            "form_id": "123e4567-e89b-12d3-a456-426614174000",
+
+            "user_id": 63121552,
+
+            "answers": [
+                {
+                    "id": "123e4567-e89b-12d3-a456-426614174001",
+                    "content": ["John Doe"]
+                },
+                {
+                    "id": "123e4567-e89b-12d3-a456-426614174002",
+                    "content": ["S", "XL"]
+                }
+            ]
+        }
+    ]
+
+    "users": {
+        "63121552": {
+            "name": "John Doe",
+            "avatar": "https://example.com/avatar.png"
+        }
+    }
 }
 ```
 
