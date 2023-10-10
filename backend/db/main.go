@@ -18,4 +18,5 @@ func init() {
 
 	collectionForms = DB.Collection("forms")
 	collectionUsers = DB.Collection("users")
+	collectionResponses = DB.Collection("responses")
 }
