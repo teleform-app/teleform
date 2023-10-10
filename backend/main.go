@@ -36,6 +36,9 @@ func main() {
 	api.GET("/getMyForms", methods.GetMyForms)
 	api.POST("/createForm", methods.CreateForm)
 	api.POST("/editForm", methods.EditForm)
+	api.POST("/respondToForm", methods.RespondToForm)
+	api.POST("/deleteForm", methods.DeleteForm)
+	api.GET("/getFormResponses", methods.GetFormResponses)
 
 	api.Use(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "no such API method"})

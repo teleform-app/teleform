@@ -26,6 +26,11 @@ func GetForm(id uuid.UUID) (*model.Form, error) {
 	}
 }
 
+func DeleteForm(id uuid.UUID) error {
+	_, err := collectionForms.DeleteOne(context.Background(), bson.D{{"_id", id[:]}})
+	return err
+}
+
 func GetFormsByUser(id int64) ([]model.Form, error) {
 	var forms = make([]model.Form, 0)
 
