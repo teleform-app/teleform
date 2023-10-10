@@ -11,7 +11,6 @@ import {
   FormQuestionEditTypeSelectText,
   FormQuestionEditTypeSelectWrapper,
   FormQuestionEditWrapper,
-  FormQuestionOptionsDeleteIcon,
   FormQuestionOptionsDeleteIconWrapper,
   FormQuestionOptionsInput,
   FormQuestionOptionsWrapper,

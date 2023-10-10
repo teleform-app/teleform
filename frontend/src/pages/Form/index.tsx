@@ -17,6 +17,7 @@ import { useBackButton } from "../../hooks/useBackButton.ts";
 import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
 import { useEditFormState } from "../../atoms/editForm.ts";
 import { Add } from "../../components/Add";
+import axios from "axios";
 
 export const FormPage = () => {
   const { id } = useParams();
@@ -116,6 +117,21 @@ export const FormPage = () => {
     navigate(`/questionEdit/${questionId}`);
   };
 
+  const saveForm = () => {
+    axios.post(`/api/editForm`, {
+      ...form,
+      questions: form.questions.map((question) => {
+        return {
+          ...question,
+          content: {
+            text: question.title,
+            options: question.options,
+          },
+        };
+      }),
+    });
+  };
+
   const onAddQuestion = () => {
     setEditFormState((prevState) => {
       if (!prevState.form) {
@@ -160,7 +176,7 @@ export const FormPage = () => {
       {isMyForm ? (
         <>
           <Add title="Add question" onClick={onAddQuestion} />
-          <FormButton disabled={false} onClick={submitForm}>
+          <FormButton disabled={false} onClick={saveForm}>
             Save
           </FormButton>
         </>
