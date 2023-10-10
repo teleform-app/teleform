@@ -251,4 +251,6 @@ func ExportFormResponses(c *gin.Context) {
 	default:
 		c.JSON(400, gin.H{"error": "invalid format"})
 	}
+
+	c.JSON(200, gin.H{"status": "ok"})
 }
