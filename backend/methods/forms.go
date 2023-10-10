@@ -26,6 +26,8 @@ func GetForm(c *gin.Context) {
 		return
 	}
 
+	form.Responses = db.CountResponsesByForm(formID)
+
 	if form == nil {
 		c.JSON(404, gin.H{"error": "no such form"})
 	} else {
@@ -40,6 +42,10 @@ func GetMyForms(c *gin.Context) {
 	if err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return
+	}
+
+	for i := range forms {
+		forms[i].Responses = db.CountResponsesByForm(forms[i].ID)
 	}
 
 	c.JSON(200, gin.H{"forms": forms})
