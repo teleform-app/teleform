@@ -18,7 +18,7 @@ func InsertResponse(response model.Response) error {
 func GetResponsesByForm(id uuid.UUID) ([]model.Response, error) {
 	var responses = make([]model.Response, 0)
 
-	cursor, err := collectionResponses.Find(context.Background(), bson.D{{"form", id}})
+	cursor, err := collectionResponses.Find(context.Background(), bson.D{{"form_id", id}})
 	if err != nil {
 		return nil, err
 	}
@@ -31,6 +31,6 @@ func GetResponsesByForm(id uuid.UUID) ([]model.Response, error) {
 }
 
 func CountResponsesByForm(id uuid.UUID) int64 {
-	cc, _ := collectionResponses.CountDocuments(context.Background(), bson.D{{"form", id}})
+	cc, _ := collectionResponses.CountDocuments(context.Background(), bson.D{{"form_id", id}})
 	return cc
 }
