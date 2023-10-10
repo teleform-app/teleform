@@ -42,3 +42,17 @@ export const FormButton = styled.div<{ disabled: boolean }>`
   align-items: center;
   justify-content: center;
 `;
+
+export const FormActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const FormDelete = styled.div`
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+
+  font-family: var(--font-regular);
+  color: #c63636;
+`;

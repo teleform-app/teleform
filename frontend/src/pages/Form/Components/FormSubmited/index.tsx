@@ -1,15 +1,19 @@
 import {
   FormSubmittedDescription,
   FormSubmittedIcon,
-  FormSubmittedShare,
   FormSubmittedTitle,
   FormSubmittedWrapper,
 } from "./styles.tsx";
 
 import SubmittedAnimated from "./submitted.json";
 import { useLottie } from "lottie-react";
-
-export const FormSubmitted = () => {
+import { Share } from "../../../../components/Share";
+import { Form } from "types/form.ts";
+import { FC } from "react";
+interface FormSubmittedProps {
+  form: Form;
+}
+export const FormSubmitted: FC<FormSubmittedProps> = ({ form }) => {
   const options = {
     animationData: SubmittedAnimated,
     loop: true,
@@ -24,7 +28,7 @@ export const FormSubmitted = () => {
       <FormSubmittedDescription>
         You can close this window now, answers are saved
       </FormSubmittedDescription>
-      <FormSubmittedShare>Share this form</FormSubmittedShare>
+      <Share title={form.title} id={form.id} />
     </FormSubmittedWrapper>
   );
 };

@@ -33,12 +33,3 @@ export const FormSubmittedDescription = styled.div`
   margin: 20px;
   margin-bottom: 14px;
 `;
-
-export const FormSubmittedShare = styled.div`
-  font-family: var(--font-regular);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-
-  color: var(--accent);
-`;

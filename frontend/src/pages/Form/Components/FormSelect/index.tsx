@@ -22,7 +22,7 @@ export const mapOfType: Record<FormQuestionType, string> = {
   select: "Select",
 };
 export interface FormSelectProps {
-  name: string;
+  id: string;
   options: FormSelectOptionType[];
   multichoice?: boolean;
   onChange?: (name: string, value: string | string[]) => void;
@@ -30,7 +30,7 @@ export interface FormSelectProps {
 }
 
 export const FormSelect: FC<FormSelectProps> = ({
-  name,
+  id,
   options,
   multichoice = false,
   onChange,
@@ -57,9 +57,9 @@ export const FormSelect: FC<FormSelectProps> = ({
   };
 
   useEffect(() => {
-    onChange?.(name, selectedOptions);
+    onChange?.(id, selectedOptions);
     // eslint-disable-next-line
-  }, [name, selectedOptions]);
+  }, [id, selectedOptions]);
 
   return (
     <FormSelectWrapper background={background}>

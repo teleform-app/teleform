@@ -1,5 +1,7 @@
 import {
+  FormActions,
   FormButton,
+  FormDelete,
   FormEmoji,
   FormHeader,
   FormTitle,
@@ -18,6 +20,7 @@ import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
 import { useEditFormState } from "../../atoms/editForm.ts";
 import { Add } from "../../components/Add";
 import axios from "axios";
+import { Share } from "../../components/Share";
 
 export const FormPage = () => {
   const { id } = useParams();
@@ -49,9 +52,9 @@ export const FormPage = () => {
     }
   }, [data, isMyForm, setEditFormState]);
 
-  const handleChange = (title: string, value: FormQuestionAnswer) => {
+  const handleChange = (id: string, value: FormQuestionAnswer) => {
     setAnswers((prevState) => {
-      return { ...prevState, [title]: value };
+      return { ...prevState, [id]: value };
     });
     setShowError(false);
   };
@@ -65,7 +68,7 @@ export const FormPage = () => {
   }
 
   const fieldErrors = form.questions.filter((question) => {
-    const value = answers[question.title];
+    const value = answers[question.id];
 
     if (value) {
       if (question.type === "email") {
@@ -89,11 +92,17 @@ export const FormPage = () => {
 
   const isHaveErrors = fieldErrors.length > 0;
   const submitForm = () => {
-    if (isHaveErrors) {
-      setShowError(true);
-    } else {
-      setIsSubmited(true);
-    }
+    axios
+      .post("/api/respondToForm", {
+        form_id: form.id,
+        answers: Object.entries(answers).map(([key, value]) => ({
+          id: key,
+          content: Array.isArray(value) ? value : [value],
+        })),
+      })
+      .then(() => {
+        setIsSubmited(true);
+      });
   };
 
   const deleteQuestion = (id: string) => {
@@ -154,7 +163,17 @@ export const FormPage = () => {
     });
   };
 
-  if (isSubmited) return <FormSubmitted />;
+  const deleteForm = () => {
+    axios
+      .post(`/api/deleteForm`, {
+        form_id: form.id,
+      })
+      .then(() => {
+        navigate("/");
+      });
+  };
+
+  if (isSubmited) return <FormSubmitted form={form} />;
 
   return (
     <FormWrapper>
@@ -179,6 +198,10 @@ export const FormPage = () => {
           <FormButton disabled={false} onClick={saveForm}>
             Save
           </FormButton>
+          <FormActions>
+            <Share title={form.title} id={form.id} />
+            <FormDelete onClick={deleteForm}>Delete form</FormDelete>
+          </FormActions>
         </>
       ) : (
         <FormButton disabled={isHaveErrors} onClick={submitForm}>

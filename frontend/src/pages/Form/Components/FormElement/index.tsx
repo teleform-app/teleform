@@ -16,7 +16,7 @@ import { DeleteIcon } from "pages/Form/Components/FormElement/delete.tsx";
 interface FormElementProps {
   question: FormQuestion;
   error?: boolean;
-  onChange: (name: string, value: string | string[]) => void;
+  onChange: (id: string, value: string | string[]) => void;
   onDelete: () => void;
   onEdit: () => void;
   isEdit?: boolean;
@@ -34,7 +34,7 @@ export const FormElement: FC<FormElementProps> = ({
       <FormElementTitle>{question.title}</FormElementTitle>
       {question.type === "select" && question.options ? (
         <FormSelect
-          name={question.title}
+          id={question.id}
           options={question.options.map((option) => ({
             key: option,
             title: option,
@@ -48,7 +48,7 @@ export const FormElement: FC<FormElementProps> = ({
           placeholder={isEdit ? mapOfType[question.type] : "Type here"}
           type={question.type}
           onChange={(event) => {
-            onChange(question.title, event.currentTarget.value);
+            onChange(question.id, event.currentTarget.value);
           }}
           error={error}
           disabled={isEdit}
