@@ -128,6 +128,8 @@ func RespondToForm(c *gin.Context) {
 
 	body.UserID = initData.User.ID
 
+	body.SubmittedAt = time.Now()
+
 	form, err := db.GetForm(body.FormID)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
