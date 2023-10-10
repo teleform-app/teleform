@@ -37,6 +37,11 @@ func main() {
 	api.POST("/createForm", methods.CreateForm)
 	api.POST("/editForm", methods.EditForm)
 
+	api.Use(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "no such API method"})
+		c.Abort()
+	})
+
 	router.Use(static.Serve("/", static.LocalFile("/app/frontend-build", false)))
 
 	router.Use(func(c *gin.Context) {
