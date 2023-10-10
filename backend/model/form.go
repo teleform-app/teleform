@@ -13,6 +13,8 @@ type Form struct {
 	Emoji string `json:"emoji" bson:"emoji"`
 	Title string `json:"title" bson:"title"`
 
+	Responses int64 `json:"response" bson:"response"`
+
 	CreatedAt time.Time `json:"created_at" bson:"created_at"`
 
 	Questions []Question `json:"questions" bson:"questions"`

@@ -14,11 +14,6 @@ import (
 )
 
 func GetForm(c *gin.Context) {
-	type responseForm struct {
-		*model.Form
-		Responses int64 `json:"responses"`
-	}
-
 	formID, err := uuid.Parse(c.Query("form_id"))
 	if err != nil {
 		c.JSON(400, gin.H{"error": "invalid form id"})
@@ -31,10 +26,12 @@ func GetForm(c *gin.Context) {
 		return
 	}
 
+	form.Responses = db.CountResponsesByForm(formID)
+
 	if form == nil {
 		c.JSON(404, gin.H{"error": "no such form"})
 	} else {
-		c.JSON(200, gin.H{"form": responseForm{Form: form, Responses: db.CountResponsesByForm(formID)}})
+		c.JSON(200, gin.H{"form": form})
 	}
 }
 
@@ -45,6 +42,10 @@ func GetMyForms(c *gin.Context) {
 	if err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return
+	}
+
+	for i := range forms {
+		forms[i].Responses = db.CountResponsesByForm(forms[i].ID)
 	}
 
 	c.JSON(200, gin.H{"forms": forms})
