@@ -20,7 +20,10 @@ func init() {
 
 	defer bot.StopLongPolling()
 
-	updates, _ := bot.UpdatesViaLongPolling(nil)
+	updates, err := bot.UpdatesViaLongPolling(nil)
+	if err != nil {
+		panic(err)
+	}
 
 	go func() {
 		for update := range updates {
