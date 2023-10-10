@@ -41,14 +41,8 @@ func processMessage(message *telego.Message) {
 			ID: message.Chat.ID,
 		},
 
-		Text:                     "Hi! I can help you to create forms. Just open my app!\n\nt.me/teleformappbot/form",
-		ParseMode:                "",
-		Entities:                 nil,
-		DisableWebPagePreview:    false,
-		DisableNotification:      false,
-		ProtectContent:           false,
-		ReplyToMessageID:         0,
-		AllowSendingWithoutReply: false,
+		Text:      "📊 Hi! I can help you to create forms. Just [open my app](https://t.me/teleformappbot/form)!",
+		ParseMode: "Markdown",
 	})
 
 	if err != nil {
