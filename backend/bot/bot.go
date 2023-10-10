@@ -39,6 +39,8 @@ func processUpdate(update telego.Update) {
 }
 
 func processMessage(message *telego.Message) {
+	log.Printf("[bot] Received message: %s", message.Text)
+
 	_, err := bot.SendMessage(&telego.SendMessageParams{
 		ChatID: telego.ChatID{
 			ID: message.Chat.ID,
