@@ -51,7 +51,11 @@ export const FormPage = () => {
 
   useEffect(() => {
     if (data && isMyForm) {
-      telegram?.requestWriteAccess();
+      try {
+        telegram?.requestWriteAccess();
+      } catch (e) {
+        console.error(e);
+      }
       setEditFormState((prevState) => {
         if (prevState?.form?.id !== data.form.id) {
           return { form: data.form };
