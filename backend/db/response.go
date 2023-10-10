@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"teleform/model"
 )
 
@@ -18,7 +19,7 @@ func InsertResponse(response model.Response) error {
 func GetResponsesByForm(id uuid.UUID) ([]model.Response, error) {
 	var responses = make([]model.Response, 0)
 
-	cursor, err := collectionResponses.Find(context.Background(), bson.D{{"form_id", id}})
+	cursor, err := collectionResponses.Find(context.Background(), bson.D{{"form_id", id}}, options.Find().SetSort(bson.D{{"submitted_at", 1}}))
 	if err != nil {
 		return nil, err
 	}

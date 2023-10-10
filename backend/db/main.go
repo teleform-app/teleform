@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -17,6 +18,28 @@ func init() {
 	DB = client.Database("teleform")
 
 	collectionForms = DB.Collection("forms")
-	collectionUsers = DB.Collection("users")
+
+	_, err = collectionForms.Indexes().CreateOne(context.Background(), mongo.IndexModel{
+		Keys: bson.D{
+			{"author", 1},
+			{"created_at", -1},
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+
 	collectionResponses = DB.Collection("responses")
+	_, err = collectionResponses.Indexes().CreateOne(context.Background(), mongo.IndexModel{
+		Keys: bson.D{
+			{"form_id", 1},
+			{"submitted_at", 1},
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	collectionUsers = DB.Collection("users")
+
 }
