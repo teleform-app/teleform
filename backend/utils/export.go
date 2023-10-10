@@ -16,7 +16,7 @@ func ExportToCSV(form *model.Form, responses []model.Response) ([]byte, error) {
 
 	// Write header
 	header := make([]string, 0)
-	header = append(header, "User ID", "User", "Created At")
+	header = append(header, "User ID", "User", "User nickname", "Created At")
 
 	questionsMapping := make(map[uuid.UUID]int)
 
@@ -40,10 +40,13 @@ func ExportToCSV(form *model.Form, responses []model.Response) ([]byte, error) {
 		}
 
 		row[1] = strings.TrimSpace(u.FirstName + " " + u.LastName)
-		row[2] = response.SubmittedAt.String()
+		row[2] = u.Username
+		row[3] = response.SubmittedAt.String()
 
 		for _, answer := range response.Answers {
-			row[questionsMapping[answer.QuestionID]] = strings.Join(answer.Content, ";")
+			if questionsMapping[answer.QuestionID] != 0 {
+				row[questionsMapping[answer.QuestionID]] = strings.Join(answer.Content, ";")
+			}
 		}
 
 		err = w.Write(row)
