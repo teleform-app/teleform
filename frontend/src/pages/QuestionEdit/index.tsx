@@ -43,7 +43,7 @@ export const QuestionEdit = () => {
   const [isMandatoryQuestion, setIsMandatoryQuestion] = useState(false);
   const [isMultichoice, setIsMultichoice] = useState(false);
   const [isOpenSelectType, setIsOpenSelectType] = useState(false);
-  const [options, setOptions] = useState<string[]>([""]);
+  const [options, setOptions] = useState<string[]>(["", ""]);
 
   const { id } = useParams();
 
@@ -158,13 +158,15 @@ export const QuestionEdit = () => {
                     onChangeOption(i, e.currentTarget.value);
                   }}
                 />
-                <FormQuestionOptionsDeleteIconWrapper
-                  onClick={() => {
-                    deleteOption(i);
-                  }}
-                >
-                  <DeleteIcon />
-                </FormQuestionOptionsDeleteIconWrapper>
+                {options.length > 1 && (
+                  <FormQuestionOptionsDeleteIconWrapper
+                    onClick={() => {
+                      deleteOption(i);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </FormQuestionOptionsDeleteIconWrapper>
+                )}
               </FormQuestionOptionsWrapper>
             ))}
             <Add title="Add option" onClick={addOption} />
@@ -180,12 +182,14 @@ export const QuestionEdit = () => {
             onChange={setIsMandatoryQuestion}
           />
         </FormQuestionEditSettingWrapper>
-        <FormQuestionEditSettingWrapper>
-          <FormQuestionEditSettingTitle>
-            Multiple answers
-          </FormQuestionEditSettingTitle>
-          <Switch checked={isMultichoice} onChange={setIsMultichoice} />
-        </FormQuestionEditSettingWrapper>
+        {type === "select" && (
+          <FormQuestionEditSettingWrapper>
+            <FormQuestionEditSettingTitle>
+              Multiple answers
+            </FormQuestionEditSettingTitle>
+            <Switch checked={isMultichoice} onChange={setIsMultichoice} />
+          </FormQuestionEditSettingWrapper>
+        )}
         <FormQuestionEditSeparator />
         <FormQuestionEditSaveButton onClick={onSave}>
           Save

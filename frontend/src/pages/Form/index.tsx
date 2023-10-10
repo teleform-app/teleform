@@ -21,6 +21,7 @@ import { useEditFormState } from "../../atoms/editForm.ts";
 import { Add } from "../../components/Add";
 import axios from "axios";
 import { Share } from "../../components/Share";
+import { FormSaved } from "pages/Form/Components/FormSaved";
 
 export const FormPage = () => {
   const { id } = useParams();
@@ -30,7 +31,8 @@ export const FormPage = () => {
     {},
   );
   const [showError, setShowError] = useState<boolean>(false);
-  const [isSubmited, setIsSubmited] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const [editForm, setEditFormState] = useEditFormState();
 
@@ -101,7 +103,7 @@ export const FormPage = () => {
         })),
       })
       .then(() => {
-        setIsSubmited(true);
+        setIsSubmitted(true);
       });
   };
 
@@ -127,18 +129,22 @@ export const FormPage = () => {
   };
 
   const saveForm = () => {
-    axios.post(`/api/editForm`, {
-      ...form,
-      questions: form.questions.map((question) => {
-        return {
-          ...question,
-          content: {
-            text: question.title,
-            options: question.options,
-          },
-        };
-      }),
-    });
+    axios
+      .post(`/api/editForm`, {
+        ...form,
+        questions: form.questions.map((question) => {
+          return {
+            ...question,
+            content: {
+              text: question.title,
+              options: question.options,
+            },
+          };
+        }),
+      })
+      .then(() => {
+        setIsSaved(true);
+      });
   };
 
   const onAddQuestion = () => {
@@ -173,7 +179,8 @@ export const FormPage = () => {
       });
   };
 
-  if (isSubmited) return <FormSubmitted form={form} />;
+  if (isSubmitted) return <FormSubmitted form={form} />;
+  if (isSaved) return <FormSaved form={form} />;
 
   return (
     <FormWrapper>

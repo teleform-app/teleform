@@ -8,6 +8,7 @@ import { useBackButton } from "../../hooks/useBackButton.ts";
 import { useEditFormState } from "../../atoms/editForm.ts";
 import { NewForm } from "pages/FormList/Components/NewForm";
 import axios from "axios";
+import { Onboarding } from "../../components/Onboarding";
 
 export const PollList = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,6 +46,11 @@ export const PollList = () => {
       });
   };
 
+  const onCreateClick = () => {
+    setIsCreating(true);
+    telegram?.expand();
+  };
+
   if (data === undefined) {
     return null;
   }
@@ -59,13 +65,14 @@ export const PollList = () => {
           onCreate={onCreate}
         />
       )}
-      <Title text={"My forms"} />
-      <List
-        list={data.forms}
-        onCreate={() => {
-          setIsCreating(true);
-        }}
-      />
+      {data.forms.length > 0 ? (
+        <>
+          <Title text={"My forms"} />
+          <List list={data.forms} onCreate={onCreateClick} />
+        </>
+      ) : (
+        <Onboarding onCreate={onCreateClick} />
+      )}
       <Link to={"/form"}>
         <button>open form</button>
       </Link>

@@ -29,6 +29,12 @@ export const NewFormContent = styled.div`
   flex-direction: column;
 `;
 
+export const NewFormHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const NewFormTitle = styled.div`
   font-family: var(--font-regular);
 
@@ -41,6 +47,9 @@ export const NewFormTitle = styled.div`
   padding: 16px 7px;
 `;
 
+export const NewFormIconWrapper = styled.div`
+  margin: 7px;
+`;
 export const NewFormInput = styled(FormQuestionEditInput)`
   background: var(--tg-theme-secondary-bg-color);
   font-size: 15px;

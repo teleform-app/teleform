@@ -30,7 +30,7 @@ export const FormButton = styled.div<{ disabled: boolean }>`
 
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};
 
-  margin: 32px 7px;
+  margin: 32px 0;
   padding: 10px;
 
   font-family: var(--font-regular);
