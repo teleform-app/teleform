@@ -230,11 +230,11 @@ POST /api/respondToForm
     
     "answers": [
         {
-            "id": "123e4567-e89b-12d3-a456-426614174001",
+            "question_id": "123e4567-e89b-12d3-a456-426614174001",
             "content": ["John Doe"]
         },
         {
-            "id": "123e4567-e89b-12d3-a456-426614174002",
+            "question_id": "123e4567-e89b-12d3-a456-426614174002",
             "content": ["S", "XL"]
         }
     ] 
