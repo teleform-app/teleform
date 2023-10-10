@@ -29,3 +29,8 @@ func GetResponsesByForm(id uuid.UUID) ([]model.Response, error) {
 
 	return responses, nil
 }
+
+func CountResponsesByForm(id uuid.UUID) int64 {
+	cc, _ := collectionResponses.CountDocuments(context.Background(), bson.D{{"form", id}})
+	return cc
+}
