@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
+	"strings"
 	"teleform/bot"
 	"teleform/db"
 	"teleform/model"
@@ -204,4 +205,50 @@ func GetFormResponses(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"responses": responses})
+}
+
+func ExportFormResponses(c *gin.Context) {
+	var body struct {
+		FormID uuid.UUID `json:"form_id" binding:"required"`
+		Format string    `json:"format" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	form, err := db.GetForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	} else if form.Author != initData.User.ID {
+		c.JSON(403, gin.H{"error": "you are not the author of this form"})
+		return
+	}
+
+	responses, err := db.GetResponsesByForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	switch body.Format {
+	case "csv":
+		csv, err := utils.ExportToCSV(form, responses)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "internal server error"})
+			return
+		}
+
+		bot.SendFile(initData.User.ID, strings.ReplaceAll(form.Title, " ", "_")+".csv", csv)
+
+	default:
+		c.JSON(400, gin.H{"error": "invalid format"})
+	}
 }
