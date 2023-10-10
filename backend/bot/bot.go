@@ -18,14 +18,14 @@ func init() {
 		panic(err)
 	}
 
-	defer bot.StopLongPolling()
-
-	updates, err := bot.UpdatesViaLongPolling(nil)
-	if err != nil {
-		panic(err)
-	}
-
 	go func() {
+		defer bot.StopLongPolling()
+
+		updates, err := bot.UpdatesViaLongPolling(nil)
+		if err != nil {
+			panic(err)
+		}
+
 		for update := range updates {
 			go processUpdate(update)
 		}
