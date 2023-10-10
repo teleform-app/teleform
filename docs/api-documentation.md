@@ -39,6 +39,8 @@ GET /api/getForm?form_id=123e4567-e89b-12d3-a456-426614174000
     
     "author": 63121552,
     
+    "responses": 100,
+    
     "questions": [
         {
             "id": "123e4567-e89b-12d3-a456-426614174001",
@@ -91,6 +93,7 @@ GET /api/getMyForms
         "created_at": "2023-10-08T18:55:24.096845335Z",
         
         "author": 63121552,
+        "responses": 100,
         
         "questions": [
             {

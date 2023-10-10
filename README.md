@@ -7,4 +7,4 @@ To run:
 docker compose up --build
 ```
 
-Full documentation is available at [docs.teleform.app](https://docs.teleform.app/).
+Full documentation is available at **[docs.teleform.app](https://docs.teleform.app/)**.
