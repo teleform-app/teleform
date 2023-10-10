@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	_ "teleform/bot"
 	"teleform/methods"
 	"time"
 )

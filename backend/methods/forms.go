@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
+	"teleform/bot"
 	"teleform/db"
 	"teleform/model"
 	"teleform/utils"
@@ -104,6 +105,37 @@ func EditForm(c *gin.Context) {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return
 	}
+
+	c.JSON(http.StatusOK, body)
+}
+
+func RespondToForm(c *gin.Context) {
+	var body model.Response
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	body.UserID = initData.User.ID
+
+	form, err := db.GetForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	}
+
+	if err := db.InsertResponse(body); err != nil {
+		c.JSON(403, gin.H{"error": "you already responded to this form"})
+		return
+	}
+
+	bot.SendFormCompletionNotification(form.Author, form, &model.User{User: initData.User})
 
 	c.JSON(http.StatusOK, body)
 }
