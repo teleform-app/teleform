@@ -2,7 +2,7 @@ import { Title } from "./Components/Title";
 import { useEffect, useState } from "react";
 import { List } from "./Components/List";
 import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMyForms } from "../../hooks/useApi.ts";
 import { useBackButton } from "../../hooks/useBackButton.ts";
 import { useEditFormState } from "../../atoms/editForm.ts";
@@ -73,12 +73,6 @@ export const PollList = () => {
       ) : (
         <Onboarding onCreate={onCreateClick} />
       )}
-      <Link to={"/form"}>
-        <button>open form</button>
-      </Link>
-      <Link to={"/questionEdit"}>
-        <button>open question edit</button>
-      </Link>
     </div>
   );
 };

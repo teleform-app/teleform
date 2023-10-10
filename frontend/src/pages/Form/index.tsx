@@ -4,6 +4,8 @@ import {
   FormDelete,
   FormEmoji,
   FormHeader,
+  FormInfo,
+  FormInfoParticipants,
   FormTitle,
   FormWrapper,
 } from "pages/Form/styles.tsx";
@@ -22,6 +24,9 @@ import { Add } from "../../components/Add";
 import axios from "axios";
 import { Share } from "../../components/Share";
 import { FormSaved } from "pages/Form/Components/FormSaved";
+import { FormQuestionEditSeparator } from "pages/QuestionEdit/styles.tsx";
+import { Export } from "pages/Form/Components/Export";
+import { FormExported } from "pages/Form/Components/FormExported";
 
 export const FormPage = () => {
   const { id } = useParams();
@@ -33,6 +38,7 @@ export const FormPage = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [isExported, setIsExported] = useState<boolean>(false);
 
   const [editForm, setEditFormState] = useEditFormState();
 
@@ -179,8 +185,20 @@ export const FormPage = () => {
       });
   };
 
+  const exportForm = () => {
+    axios
+      .post(`/api/exportFormResponses`, {
+        form_id: form.id,
+        format: "csv",
+      })
+      .then(() => {
+        setIsExported(true);
+      });
+  };
+
   if (isSubmitted) return <FormSubmitted form={form} />;
   if (isSaved) return <FormSaved form={form} />;
+  if (isExported) return <FormExported />;
 
   return (
     <FormWrapper>
@@ -209,6 +227,11 @@ export const FormPage = () => {
             <Share title={form.title} id={form.id} />
             <FormDelete onClick={deleteForm}>Delete form</FormDelete>
           </FormActions>
+          <FormQuestionEditSeparator />
+          <FormInfo>
+            <FormInfoParticipants>{form.response} answers</FormInfoParticipants>
+            <Export onClick={exportForm} />
+          </FormInfo>
         </>
       ) : (
         <FormButton disabled={isHaveErrors} onClick={submitForm}>

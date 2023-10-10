@@ -3,11 +3,11 @@ export interface Form {
   author: string;
   title: string;
   emoji: string;
-  participants: number;
+  response: number;
   questions: FormQuestion[];
 }
 
-export type FormPreview = Pick<Form, "id" | "title" | "emoji" | "participants">;
+export type FormPreview = Pick<Form, "id" | "title" | "emoji" | "response">;
 
 export type FormQuestionType =
   | "regular_input"

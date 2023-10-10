@@ -43,9 +43,9 @@ export const List: FC<ListProps> = ({ list, onCreate }) => {
           <ListInfo>
             <ListFormName>{question.title}</ListFormName>
             <ListFormParticipants>
-              {question.participants === 0
+              {question.response === 0
                 ? "No responses"
-                : `${question.participants} responses`}
+                : `${question.response} responses`}
             </ListFormParticipants>
           </ListInfo>
         </ListElement>

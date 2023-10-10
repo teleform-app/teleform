@@ -56,3 +56,17 @@ export const FormDelete = styled.div`
   font-family: var(--font-regular);
   color: #c63636;
 `;
+
+export const FormInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const FormInfoParticipants = styled.div`
+  font-family: var(--font-regular);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--tg-theme-text-color);
+`;
