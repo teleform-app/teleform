@@ -22,10 +22,13 @@ func init() {
 
 	updates, _ := bot.UpdatesViaLongPolling(nil)
 
-	// Loop through all updates when they came
-	for update := range updates {
-		go processUpdate(update)
-	}
+	go func() {
+		for update := range updates {
+			go processUpdate(update)
+		}
+	}()
+
+	log.Println("[bot] Started")
 }
 
 func processUpdate(update telego.Update) {
