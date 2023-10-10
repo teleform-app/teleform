@@ -6,49 +6,14 @@ import {
   FormWrapper,
 } from "pages/Form/styles.tsx";
 import { useState } from "react";
-import { Form, FormQuestionAnswer } from "types/form.ts";
+import { FormQuestionAnswer } from "types/form.ts";
 import { FormElement } from "pages/Form/Components/FormElement";
 import { isValidEmail, isValidPhoneNumber } from "../../utils/validators.ts";
 import { FormSubmitted } from "pages/Form/Components/FormSubmited";
 import { useGetForm } from "../../hooks/useApi.ts";
 import { useParams } from "react-router-dom";
 import { useBackButton } from "../../hooks/useBackButton.ts";
-import { FormQuestionEdit } from "pages/Form/Components/FormQuestionEdit";
 
-const mockForm: Form = {
-  title:
-    "Registration to Readers Event 2023 (for Constructor University Students)",
-  emoji: "📚",
-  participants: 0,
-  questions: [
-    {
-      type: "text",
-      title:
-        "Delivery address (ZIP code, City, Street & House/Apartment number)",
-      mandatory: true,
-    },
-    {
-      type: "email",
-      title: "E-Mail",
-    },
-    {
-      type: "select",
-      title: "T-shirt size",
-      options: ["S", "M", "L", "XL"],
-      mandatory: true,
-    },
-    {
-      type: "select",
-      title: "T-shirt multi size",
-      options: ["S", "M", "L", "XL"],
-      multichoice: true,
-    },
-    {
-      type: "phone",
-      title: "Phone number",
-    },
-  ],
-};
 export const FormPage = () => {
   const { id } = useParams();
 

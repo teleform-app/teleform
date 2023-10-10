@@ -8,9 +8,13 @@ import {
 
 import CheckIcon from "./check.svg";
 
-interface FormSelectProps {
+export interface FormSelectOptionType {
+  key: string;
+  title: string;
+}
+export interface FormSelectProps {
   name: string;
-  options: string[];
+  options: FormSelectOptionType[];
   multichoice?: boolean;
   onChange?: (name: string, value: string | string[]) => void;
   background?: string;
@@ -53,15 +57,15 @@ export const FormSelect: FC<FormSelectProps> = ({
       {options.map((option) => (
         <FormSelectOption
           onClick={() => {
-            handleClick(option);
+            handleClick(option.key);
           }}
-          key={option}
+          key={option.key}
         >
-          <FormSelectOptionText>{option}</FormSelectOptionText>
+          <FormSelectOptionText>{option.title}</FormSelectOptionText>
           <FormSelectionIcon
             src={CheckIcon}
             style={{
-              visibility: selectedOptions.includes(option)
+              visibility: selectedOptions.includes(option.key)
                 ? undefined
                 : "hidden",
             }}

@@ -14,9 +14,10 @@ import {
 } from "./styles.tsx";
 import { useState } from "react";
 import { FormQuestionType } from "types/form.ts";
-import { FormSelect } from "pages/Form/Components/FormSelect";
+import { FormSelectOptionType } from "pages/Form/Components/FormSelect";
 import { ChevronIcon } from "pages/QuestionEdit/chevron.tsx";
 import { Switch } from "../../components/Switch";
+import { FormPicker } from "pages/Form/Components/FormSelect/picker.tsx";
 
 const mapOfType: Record<FormQuestionType, string> = {
   text: "Regular input",
@@ -25,6 +26,13 @@ const mapOfType: Record<FormQuestionType, string> = {
   email: "e-mail",
   select: "Select",
 };
+
+const typeOptions: FormSelectOptionType[] = Object.entries(mapOfType).map(
+  ([key, title]) => ({
+    key,
+    title,
+  }),
+);
 
 export const QuestionEdit = () => {
   const [type, setType] = useState<FormQuestionType>("text");
@@ -51,19 +59,15 @@ export const QuestionEdit = () => {
         </FormQuestionEditTypeSelect>
         {isOpenSelectType && (
           <FormQuestionEditTypeSelectWrapper>
-            <FormSelect
+            <FormPicker
               background="var(--tg-theme-bg-color)"
-              name="type"
-              options={Object.values(mapOfType)}
-              onChange={(_, [newValue]) => {
-                const pair = Object.entries(mapOfType).find(
-                  ([, value]) => value === newValue,
-                );
-
-                console.log(pair, newValue, "kek");
-
-                const [newType] = pair || ["text"];
-                setType(newType as FormQuestionType);
+              options={typeOptions}
+              onChange={(newValue) => {
+                const newType = newValue as FormQuestionType;
+                if (newType !== type) {
+                  setIsOpenSelectType(false);
+                }
+                setType(newType);
               }}
             />
           </FormQuestionEditTypeSelectWrapper>

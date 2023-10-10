@@ -5,7 +5,7 @@ import { QuestionEdit } from "pages/QuestionEdit";
 export const AppRouter = createBrowserRouter([
   {
     path: "/",
-    element: <QuestionEdit />,
+    element: <PollList />,
   },
   {
     path: "/form/:id",

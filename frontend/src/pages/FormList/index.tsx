@@ -30,6 +30,12 @@ export const PollList = () => {
     <div>
       <Title text={"My forms"} />
       <List list={data.forms} />
+      <Link to={"/form"}>
+        <button>open form</button>
+      </Link>
+      <Link to={"/questionEdit"}>
+        <button>open question edit</button>
+      </Link>
       <span
         style={{
           color: "white",
@@ -37,9 +43,6 @@ export const PollList = () => {
       >
         {JSON.stringify(telegram, null, 4)}
       </span>
-      <Link to={"/form"}>
-        <button>open form</button>
-      </Link>
     </div>
   );
 };

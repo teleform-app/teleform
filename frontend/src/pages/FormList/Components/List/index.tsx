@@ -12,8 +12,7 @@ import {
   ListWrapper,
 } from "pages/FormList/Components/List/styles.tsx";
 import { PlusIcon } from "pages/FormList/Components/List/plus.tsx";
-import { Link, useNavigate } from "react-router-dom";
-import { AppRouter } from "../../../../router.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface ListProps {
   list: FormPreview[];

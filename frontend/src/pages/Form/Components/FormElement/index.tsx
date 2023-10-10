@@ -23,7 +23,10 @@ export const FormElement: FC<FormElementProps> = ({
       {question.type === "select" && question.options ? (
         <FormSelect
           name={question.title}
-          options={question.options}
+          options={question.options.map((option) => ({
+            key: option,
+            title: option,
+          }))}
           multichoice={question.multichoice}
           onChange={onChange}
         />
