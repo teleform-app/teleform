@@ -11,34 +11,10 @@ type Question struct {
 
 	Mandatory bool `json:"mandatory" bson:"mandatory"`
 
-	Content any `json:"content" bson:"content"`
+	Content map[string]interface{} `json:"content" bson:"content"`
 }
 
-const QuestionTypeRegularInput QuestionType = "regular_input"
-
-type QuestionContentRegularInput struct {
-	Text        string `json:"question" bson:"question"`
-	Placeholder string `json:"placeholder" bson:"placeholder"`
-}
-
-const QuestionTypeEmail QuestionType = "email"
-
-type QuestionContentEmail struct {
-	Text        string `json:"question" bson:"question"`
-	Placeholder string `json:"placeholder" bson:"placeholder"`
-}
-
-const QuestionTypePhone QuestionType = "phone"
-
-type QuestionContentPhone struct {
-	Text        string `json:"question" bson:"question"`
-	Placeholder string `json:"placeholder" bson:"placeholder"`
-}
-
-const QuestionTypeSelector QuestionType = "selector"
-
-type QuestionContentSelector struct {
-	Text        string   `json:"question" bson:"question"`
-	Multichoice bool     `json:"multichoice" bson:"multichoice"`
-	Options     []string `json:"options" bson:"options"`
+func (q *Question) GetText() string {
+	t, _ := q.Content["text"].(string)
+	return t
 }

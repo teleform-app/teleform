@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	_ "teleform/bot"
 	"teleform/methods"
 	"time"
 )
@@ -35,6 +36,15 @@ func main() {
 	api.GET("/getMyForms", methods.GetMyForms)
 	api.POST("/createForm", methods.CreateForm)
 	api.POST("/editForm", methods.EditForm)
+	api.POST("/respondToForm", methods.RespondToForm)
+	api.POST("/deleteForm", methods.DeleteForm)
+	api.GET("/getFormResponses", methods.GetFormResponses)
+	api.POST("/exportFormResponses", methods.ExportFormResponses)
+
+	api.Use(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "no such API method"})
+		c.Abort()
+	})
 
 	router.Use(static.Serve("/", static.LocalFile("/app/frontend-build", false)))
 

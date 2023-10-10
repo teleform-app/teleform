@@ -6,11 +6,8 @@ import (
 )
 
 type Response struct {
-	ID uuid.UUID `json:"id" bson:"_id,omitempty"`
-
 	FormID uuid.UUID `json:"form_id" bson:"form_id"`
-
-	UserID int64 `json:"user" bson:"user"`
+	UserID int64     `json:"user" bson:"user"`
 
 	SubmittedAt time.Time `json:"submitted_at" bson:"submitted_at"`
 

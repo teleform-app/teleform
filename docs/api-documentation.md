@@ -226,7 +226,7 @@ Create new form.
 POST /api/respondToForm
 
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "form_id": "123e4567-e89b-12d3-a456-426614174000",
     
     "answers": [
         {
@@ -248,5 +248,107 @@ POST /api/respondToForm
     "status": "OK"
 }
 ```
+
+:::
+
+
+::: details `POST /api/deleteForm`
+
+Delete your form.
+
+#### Example Request
+
+```http request
+POST /api/deleteForm
+
+{
+    "form_id": "123e4567-e89b-12d3-a456-426614174000",
+}
+```
+
+#### Example Response
+
+```json
+{
+    "status": "ok"
+}
+```
+
+:::
+
+
+::: details `POST /api/getFormResponses`
+
+Get responses to your form. 
+
+#### Example Request
+
+```http request
+POST /api/getFormResponses
+
+{
+    "form_id": "123e4567-e89b-12d3-a456-426614174000",
+}
+```
+
+#### Example Response
+
+```json
+{
+    "responses": [
+        {
+            "form_id": "123e4567-e89b-12d3-a456-426614174000",
+
+            "user_id": 63121552,
+
+            "answers": [
+                {
+                    "id": "123e4567-e89b-12d3-a456-426614174001",
+                    "content": ["John Doe"]
+                },
+                {
+                    "id": "123e4567-e89b-12d3-a456-426614174002",
+                    "content": ["S", "XL"]
+                }
+            ]
+        }
+    ],
+
+    "users": {
+        "63121552": {
+            "name": "John Doe",
+            "avatar": "https://example.com/avatar.png"
+        }
+    }
+}
+```
+
+:::
+
+
+::: details `POST /api/exportFormResponses`
+
+Delete your form.
+
+#### Example Request
+
+```http request
+POST /api/exportFormResponses
+
+{
+    "form_id": "123e4567-e89b-12d3-a456-426614174000",
+    "format": "csv"
+}
+```
+
+#### Example Response
+
+```json
+{
+    "status": "ok"
+}
+```
+
+After that, bot will send you a file with responses in the specified format.
 
 :::

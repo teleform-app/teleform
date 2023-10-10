@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
+	"strings"
+	"teleform/bot"
 	"teleform/db"
 	"teleform/model"
 	"teleform/utils"
@@ -106,4 +108,149 @@ func EditForm(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, body)
+}
+
+func RespondToForm(c *gin.Context) {
+	var body model.Response
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	body.UserID = initData.User.ID
+
+	form, err := db.GetForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	}
+
+	if err := db.InsertResponse(body); err != nil {
+		c.JSON(403, gin.H{"error": "you already responded to this form"})
+		return
+	}
+
+	bot.SendFormCompletionNotification(form.Author, form, &model.User{User: initData.User})
+
+	c.JSON(http.StatusOK, body)
+}
+
+func DeleteForm(c *gin.Context) {
+	var body struct {
+		FormID uuid.UUID `json:"form_id" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	form, err := db.GetForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	}
+
+	if form.Author != initData.User.ID {
+		c.JSON(403, gin.H{"error": "you are not the author of this form"})
+		return
+	}
+
+	if err := db.DeleteForm(body.FormID); err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "ok"})
+}
+
+func GetFormResponses(c *gin.Context) {
+	formID, err := uuid.Parse(c.Query("form_id"))
+	if err != nil {
+		c.JSON(400, gin.H{"error": "invalid form id"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	form, err := db.GetForm(formID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	}
+
+	if form.Author != initData.User.ID {
+		c.JSON(403, gin.H{"error": "you are not the author of this form"})
+		return
+	}
+
+	responses, err := db.GetResponsesByForm(formID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	c.JSON(200, gin.H{"responses": responses})
+}
+
+func ExportFormResponses(c *gin.Context) {
+	var body struct {
+		FormID uuid.UUID `json:"form_id" binding:"required"`
+		Format string    `json:"format" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{"error": "invalid body"})
+		return
+	}
+
+	initData := c.MustGet("init_data").(*initdata.InitData)
+
+	form, err := db.GetForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	} else if form == nil {
+		c.JSON(404, gin.H{"error": "no such form"})
+		return
+	} else if form.Author != initData.User.ID {
+		c.JSON(403, gin.H{"error": "you are not the author of this form"})
+		return
+	}
+
+	responses, err := db.GetResponsesByForm(body.FormID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	switch body.Format {
+	case "csv":
+		csv, err := utils.ExportToCSV(form, responses)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "internal server error"})
+			return
+		}
+
+		bot.SendFile(initData.User.ID, strings.ReplaceAll(form.Title, " ", "_")+".csv", csv)
+
+	default:
+		c.JSON(400, gin.H{"error": "invalid format"})
+	}
+
+	c.JSON(200, gin.H{"status": "ok"})
 }
