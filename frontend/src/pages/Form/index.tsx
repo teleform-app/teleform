@@ -51,6 +51,7 @@ export const FormPage = () => {
 
   useEffect(() => {
     if (data && isMyForm) {
+      telegram?.requestWriteAccess();
       setEditFormState((prevState) => {
         if (prevState?.form?.id !== data.form.id) {
           return { form: data.form };
@@ -104,7 +105,7 @@ export const FormPage = () => {
       .post("/api/respondToForm", {
         form_id: form.id,
         answers: Object.entries(answers).map(([key, value]) => ({
-          id: key,
+          question_id: key,
           content: Array.isArray(value) ? value : [value],
         })),
       })
