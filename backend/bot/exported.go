@@ -13,7 +13,8 @@ func SendFormCompletionNotification(targetUserID int64, form *model.Form, respon
 		ChatID: telego.ChatID{
 			ID: targetUserID,
 		},
-		Text: fmt.Sprintf("Form *%s* was completed by *%s*", form.Title, respondent.FirstName),
+		Text:      fmt.Sprintf("Form *%s* was completed by *%s*", form.Title, respondent.FirstName),
+		ParseMode: "Markdown",
 	})
 
 	if err != nil {
