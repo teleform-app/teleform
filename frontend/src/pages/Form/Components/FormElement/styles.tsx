@@ -22,7 +22,7 @@ export const FormElementTitle = styled.div`
   font-style: normal;
   font-weight: 500;
 
-  margin: 0 16px;
+  margin-bottom: 16px;
 `;
 
 export const FormElementInput = styled.input<{ error?: boolean }>`
@@ -41,7 +41,26 @@ export const FormElementInput = styled.input<{ error?: boolean }>`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+`;
 
-  margin: 0 16px;
-  margin-top: 0;
+export const FormElementActionsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const FormElementAction = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const FormElementActionTitle = styled.div`
+  font-family: var(--font-regular);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+
+  color: var(--tg-theme-hint-color);
+
+  margin-left: 5px;
 `;

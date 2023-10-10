@@ -125,3 +125,14 @@ export const FormQuestionEditSaveButton = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const FormQuestionOptionsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const FormQuestionOptionsDeleteIconWrapper = styled.div``;
+export const FormQuestionOptionsInput = styled(FormQuestionEditInput)`
+  margin-right: 8px;
+  flex: 10;
+`;

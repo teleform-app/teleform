@@ -16,14 +16,15 @@ import { useNavigate } from "react-router-dom";
 
 interface ListProps {
   list: FormPreview[];
+  onCreate: () => void;
 }
 
-export const List: FC<ListProps> = ({ list }) => {
+export const List: FC<ListProps> = ({ list, onCreate }) => {
   const navigate = useNavigate();
 
   return (
     <ListWrapper>
-      <ListElement>
+      <ListElement onClick={onCreate}>
         <ListEmoji>
           <PlusIcon />
         </ListEmoji>

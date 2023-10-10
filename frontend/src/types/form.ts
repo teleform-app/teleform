@@ -1,5 +1,6 @@
 export interface Form {
   id: string;
+  author: string;
   title: string;
   emoji: string;
   participants: number;
@@ -8,8 +9,14 @@ export interface Form {
 
 export type FormPreview = Pick<Form, "id" | "title" | "emoji" | "participants">;
 
-export type FormQuestionType = "text" | "name" | "email" | "phone" | "select";
+export type FormQuestionType =
+  | "regular_input"
+  | "name"
+  | "email"
+  | "phone"
+  | "select";
 export interface FormQuestion {
+  id: string;
   type: FormQuestionType;
   title: string;
   mandatory?: boolean;

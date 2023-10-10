@@ -11,21 +11,25 @@ import {
   FormQuestionEditTypeSelectText,
   FormQuestionEditTypeSelectWrapper,
   FormQuestionEditWrapper,
+  FormQuestionOptionsDeleteIcon,
+  FormQuestionOptionsDeleteIconWrapper,
+  FormQuestionOptionsInput,
+  FormQuestionOptionsWrapper,
 } from "./styles.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormQuestionType } from "types/form.ts";
-import { FormSelectOptionType } from "pages/Form/Components/FormSelect";
+import {
+  FormSelectOptionType,
+  mapOfType,
+} from "pages/Form/Components/FormSelect";
 import { ChevronIcon } from "pages/QuestionEdit/chevron.tsx";
 import { Switch } from "../../components/Switch";
 import { FormPicker } from "pages/Form/Components/FormSelect/picker.tsx";
-
-const mapOfType: Record<FormQuestionType, string> = {
-  text: "Regular input",
-  name: "Name",
-  phone: "Phone number",
-  email: "e-mail",
-  select: "Select",
-};
+import { useParams } from "react-router-dom";
+import { useEditFormState } from "../../atoms/editForm.ts";
+import { useBackButton } from "../../hooks/useBackButton.ts";
+import { DeleteIcon } from "pages/Form/Components/FormElement/delete.tsx";
+import { Add } from "../../components/Add";
 
 const typeOptions: FormSelectOptionType[] = Object.entries(mapOfType).map(
   ([key, title]) => ({
@@ -35,11 +39,74 @@ const typeOptions: FormSelectOptionType[] = Object.entries(mapOfType).map(
 );
 
 export const QuestionEdit = () => {
-  const [type, setType] = useState<FormQuestionType>("text");
+  const [type, setType] = useState<FormQuestionType>("regular_input");
   const [title, setTitle] = useState("");
   const [isMandatoryQuestion, setIsMandatoryQuestion] = useState(false);
   const [isMultichoice, setIsMultichoice] = useState(false);
   const [isOpenSelectType, setIsOpenSelectType] = useState(false);
+  const [options, setOptions] = useState<string[]>([""]);
+
+  const { id } = useParams();
+
+  const [editForm, setEditFormState] = useEditFormState();
+
+  useBackButton(false);
+
+  useEffect(() => {
+    const { form } = editForm;
+
+    if (form) {
+      const question = form.questions.find((question) => question.id === id);
+
+      if (question) {
+        setType(question.type);
+        setTitle(question.title);
+        setIsMandatoryQuestion(question.mandatory || false);
+        setIsMultichoice(question.multichoice || false);
+      }
+    }
+  }, [editForm, id]);
+
+  const onSave = () => {
+    setEditFormState((prevState) => {
+      if (!prevState.form) {
+        return prevState;
+      }
+
+      return {
+        form: {
+          ...prevState.form,
+          questions: prevState.form.questions.map((question) =>
+            question.id === id
+              ? {
+                  ...question,
+                  title,
+                  type,
+                  mandatory: isMandatoryQuestion,
+                  multichoice: isMultichoice,
+                  options,
+                }
+              : question,
+          ),
+        },
+      };
+    });
+    window.history.back();
+  };
+
+  const addOption = () => {
+    setOptions((prevState) => [...prevState, ""]);
+  };
+
+  const deleteOption = (index: number) => {
+    setOptions((prevState) => prevState.filter((_, i) => i !== index));
+  };
+
+  const onChangeOption = (index: number, value: string) => {
+    setOptions((prevState) =>
+      prevState.map((option, i) => (i === index ? value : option)),
+    );
+  };
 
   return (
     <FormQuestionEditWrapper>
@@ -80,6 +147,30 @@ export const QuestionEdit = () => {
             setTitle(e.currentTarget.value);
           }}
         />
+        {type === "select" && (
+          <>
+            <FormQuestionEditTitle>Options</FormQuestionEditTitle>
+            {options.map((option, i) => (
+              <FormQuestionOptionsWrapper key={i}>
+                <FormQuestionOptionsInput
+                  value={option}
+                  placeholder="Type here"
+                  onChange={(e) => {
+                    onChangeOption(i, e.currentTarget.value);
+                  }}
+                />
+                <FormQuestionOptionsDeleteIconWrapper
+                  onClick={() => {
+                    deleteOption(i);
+                  }}
+                >
+                  <DeleteIcon />
+                </FormQuestionOptionsDeleteIconWrapper>
+              </FormQuestionOptionsWrapper>
+            ))}
+            <Add title="Add option" onClick={addOption} />
+          </>
+        )}
         <FormQuestionEditSeparator />
         <FormQuestionEditSettingWrapper>
           <FormQuestionEditSettingTitle>
@@ -97,7 +188,9 @@ export const QuestionEdit = () => {
           <Switch checked={isMultichoice} onChange={setIsMultichoice} />
         </FormQuestionEditSettingWrapper>
         <FormQuestionEditSeparator />
-        <FormQuestionEditSaveButton>Save</FormQuestionEditSaveButton>
+        <FormQuestionEditSaveButton onClick={onSave}>
+          Save
+        </FormQuestionEditSaveButton>
       </FormQuestionEditContent>
     </FormQuestionEditWrapper>
   );

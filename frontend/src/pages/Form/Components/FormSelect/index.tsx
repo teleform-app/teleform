@@ -7,11 +7,20 @@ import {
 } from "pages/Form/Components/FormSelect/styles.tsx";
 
 import CheckIcon from "./check.svg";
+import { FormQuestionType } from "types/form.ts";
 
 export interface FormSelectOptionType {
   key: string;
   title: string;
 }
+
+export const mapOfType: Record<FormQuestionType, string> = {
+  regular_input: "Regular input",
+  name: "Name",
+  phone: "Phone number",
+  email: "e-mail",
+  select: "Select",
+};
 export interface FormSelectProps {
   name: string;
   options: FormSelectOptionType[];

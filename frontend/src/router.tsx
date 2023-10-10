@@ -12,7 +12,7 @@ export const AppRouter = createBrowserRouter([
     element: <FormPage />,
   },
   {
-    path: "/questionEdit",
+    path: "/questionEdit/:id",
     element: <QuestionEdit />,
   },
 ]);

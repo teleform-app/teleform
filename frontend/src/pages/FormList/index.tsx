@@ -1,17 +1,25 @@
 import { Title } from "./Components/Title";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { List } from "./Components/List";
 import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMyForms } from "../../hooks/useApi.ts";
 import { useBackButton } from "../../hooks/useBackButton.ts";
+import { useRecoilState } from "recoil";
+import { editFormState, useEditFormState } from "../../atoms/editForm.ts";
+import { NewForm } from "pages/FormList/Components/NewForm";
+import axios from "axios";
 
 export const PollList = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   const { data } = useMyForms();
 
+  const [, setEditFormState] = useEditFormState();
+  const [isCreating, setIsCreating] = useState(false);
+
   const telegram = useTelegramWebApp();
+  const navigate = useNavigate();
 
   useBackButton(true);
 
@@ -22,27 +30,49 @@ export const PollList = () => {
     }
   }, [telegram]);
 
+  useEffect(() => {
+    setEditFormState({
+      form: undefined,
+    });
+  }, [setEditFormState]);
+
+  const onCreate = (title: string) => {
+    axios
+      .post("/api/createForm", {
+        title,
+      })
+      .then(({ data }) => {
+        navigate(`/form/${data.form.id}`);
+      });
+  };
+
   if (data === undefined) {
     return null;
   }
 
   return (
     <div>
+      {isCreating && (
+        <NewForm
+          onClose={() => {
+            setIsCreating(false);
+          }}
+          onCreate={onCreate}
+        />
+      )}
       <Title text={"My forms"} />
-      <List list={data.forms} />
+      <List
+        list={data.forms}
+        onCreate={() => {
+          setIsCreating(true);
+        }}
+      />
       <Link to={"/form"}>
         <button>open form</button>
       </Link>
       <Link to={"/questionEdit"}>
         <button>open question edit</button>
       </Link>
-      <span
-        style={{
-          color: "white",
-        }}
-      >
-        {JSON.stringify(telegram, null, 4)}
-      </span>
     </div>
   );
 };

@@ -5,18 +5,21 @@ import {
   FormTitle,
   FormWrapper,
 } from "pages/Form/styles.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { FormQuestionAnswer } from "types/form.ts";
 import { FormElement } from "pages/Form/Components/FormElement";
 import { isValidEmail, isValidPhoneNumber } from "../../utils/validators.ts";
 import { FormSubmitted } from "pages/Form/Components/FormSubmited";
 import { useGetForm } from "../../hooks/useApi.ts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBackButton } from "../../hooks/useBackButton.ts";
+import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
+import { useEditFormState } from "../../atoms/editForm.ts";
+import { Add } from "../../components/Add";
 
 export const FormPage = () => {
   const { id } = useParams();
-
   const { data } = useGetForm(id as string);
 
   const [answers, setAnswers] = useState<Record<string, FormQuestionAnswer>>(
@@ -25,7 +28,25 @@ export const FormPage = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const [isSubmited, setIsSubmited] = useState<boolean>(false);
 
+  const [editForm, setEditFormState] = useEditFormState();
+
+  const navigate = useNavigate();
+
+  const telegram = useTelegramWebApp();
   useBackButton(false);
+
+  const isMyForm = data?.form?.author === telegram.initDataUnsafe.user.id;
+
+  useEffect(() => {
+    if (data && isMyForm) {
+      setEditFormState((prevState) => {
+        if (prevState?.form?.id !== data.form.id) {
+          return { form: data.form };
+        }
+        return prevState;
+      });
+    }
+  }, [data, isMyForm, setEditFormState]);
 
   const handleChange = (title: string, value: FormQuestionAnswer) => {
     setAnswers((prevState) => {
@@ -36,7 +57,7 @@ export const FormPage = () => {
   if (data === undefined) {
     return null;
   }
-  const { form } = data;
+  const form = editForm?.form || data?.form;
 
   if (!form) {
     return "kek";
@@ -44,7 +65,6 @@ export const FormPage = () => {
 
   const fieldErrors = form.questions.filter((question) => {
     const value = answers[question.title];
-    console.log(question.title, value);
 
     if (value) {
       if (question.type === "email") {
@@ -75,6 +95,49 @@ export const FormPage = () => {
     }
   };
 
+  const deleteQuestion = (id: string) => {
+    setEditFormState((prevState) => {
+      if (!prevState.form) {
+        return prevState;
+      }
+
+      return {
+        form: {
+          ...prevState.form,
+          questions: prevState.form.questions.filter(
+            (question) => question.id !== id,
+          ),
+        },
+      };
+    });
+  };
+
+  const onEdit = (questionId: string) => {
+    navigate(`/questionEdit/${questionId}`);
+  };
+
+  const onAddQuestion = () => {
+    setEditFormState((prevState) => {
+      if (!prevState.form) {
+        return prevState;
+      }
+
+      return {
+        form: {
+          ...prevState.form,
+          questions: [
+            ...prevState.form.questions,
+            {
+              id: uuidv4(),
+              type: "regular_input",
+              title: "New question",
+            },
+          ],
+        },
+      };
+    });
+  };
+
   if (isSubmited) return <FormSubmitted />;
 
   return (
@@ -85,15 +148,29 @@ export const FormPage = () => {
       </FormHeader>
       {form.questions.map((question) => (
         <FormElement
-          key={question.title}
+          key={question.id}
           question={question}
           onChange={handleChange}
           error={showError ? fieldErrors.includes(question) : false}
+          isEdit={isMyForm}
+          onDelete={() => deleteQuestion(question.id)}
+          onEdit={() => onEdit(question.id)}
         />
       ))}
-      <FormButton disabled={isHaveErrors} onClick={submitForm}>
-        {isHaveErrors ? `${fieldErrors.length} questions remaining` : "Submit"}
-      </FormButton>
+      {isMyForm ? (
+        <>
+          <Add title="Add question" onClick={onAddQuestion} />
+          <FormButton disabled={false} onClick={submitForm}>
+            Save
+          </FormButton>
+        </>
+      ) : (
+        <FormButton disabled={isHaveErrors} onClick={submitForm}>
+          {isHaveErrors
+            ? `${fieldErrors.length} questions remaining`
+            : "Submit"}
+        </FormButton>
+      )}
     </FormWrapper>
   );
 };
