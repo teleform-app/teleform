@@ -16,13 +16,13 @@ hero:
 
 features:
   - title: One-click deployment
-    emoji: 🐳
+    icon: 🐳
     details: Thanks to `docker compose`, one command and you're all set.
   - title: Really simple app
-    emoji: 📝
+    icon: 📝
     details: No fancy stuff, just a simple form creation and completion.
   - title: Open-source
-    emoji: 🎁
+    icon: 🎁
     details: And MIT-licensed, so you can do whatever you want with it.
 ---
 
