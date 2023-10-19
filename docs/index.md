@@ -17,7 +17,7 @@ hero:
 features:
   - title: One-click deployment
     icon: 🐳
-    details: Thanks to `docker compose`, one command and you're all set.
+    details: Thanks to docker compose, one command and you're all set.
   - title: Really simple app
     icon: 📝
     details: No fancy stuff, just a simple form creation and completion.
