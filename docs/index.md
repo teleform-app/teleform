@@ -15,11 +15,14 @@ hero:
       link: https://github.com/teleform-app/teleform
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: One-click deployment
+    emoji: 🐳
+    details: Thanks to `docker compose`, one command and you're all set.
+  - title: Really simple app
+    emoji: 📝
+    details: No fancy stuff, just a simple form creation and completion.
+  - title: Open-source
+    emoji: 🎁
+    details: And MIT-licensed, so you can do whatever you want with it.
 ---
 
