@@ -1,15 +1,14 @@
+import { useLottie } from 'lottie-react'
+import { Form } from 'types/form.ts'
+import { FC } from 'react'
+import { Share } from '../../../../components/Share'
+import okAnimated from './ok.json'
 import {
     FormSavedDescription,
     FormSavedIcon,
     FormSavedTitle,
     FormSavedWrapper,
 } from './styles.tsx'
-
-import okAnimated from './ok.json'
-import { useLottie } from 'lottie-react'
-import { Share } from '../../../../components/Share'
-import { Form } from 'types/form.ts'
-import { FC } from 'react'
 interface FormSavedProps {
     form: Form
 }

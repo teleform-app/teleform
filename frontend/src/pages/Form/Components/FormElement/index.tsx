@@ -8,10 +8,11 @@ import {
     FormElementWrapper,
 } from 'pages/Form/Components/FormElement/styles.tsx'
 import { FC } from 'react'
-import { FormSelect, mapOfType } from 'pages/Form/Components/FormSelect'
+import { FormSelect } from 'pages/Form/Components/FormSelect'
 import { FormQuestionEditSeparator } from 'pages/QuestionEdit/styles.tsx'
 import { SettingsIcon } from 'pages/Form/Components/FormElement/settings.tsx'
 import { DeleteIcon } from 'pages/Form/Components/FormElement/delete.tsx'
+import { mapOfType } from '../FormSelect/mapOfType'
 
 interface FormElementProps {
     question: FormQuestion

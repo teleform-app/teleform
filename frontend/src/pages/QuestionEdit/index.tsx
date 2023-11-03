@@ -1,3 +1,15 @@
+import { useLayoutEffect, useState } from 'react'
+import { FormQuestionType } from 'types/form.ts'
+import { FormSelectOptionType } from 'pages/Form/Components/FormSelect'
+import { mapOfType } from 'pages/Form/Components/FormSelect/mapOfType.tsx'
+import { ChevronIcon } from 'pages/QuestionEdit/chevron.tsx'
+import { FormPicker } from 'pages/Form/Components/FormSelect/picker.tsx'
+import { useParams } from 'react-router-dom'
+import { DeleteIcon } from 'pages/Form/Components/FormElement/delete.tsx'
+import { Switch } from '../../components/Switch'
+import { useEditFormState } from '../../atoms/editForm.ts'
+import { useBackButton } from '../../hooks/useBackButton.ts'
+import { Add } from '../../components/Add'
 import {
     FormQuestionEditContent,
     FormQuestionEditInput,
@@ -15,20 +27,6 @@ import {
     FormQuestionOptionsInput,
     FormQuestionOptionsWrapper,
 } from './styles.tsx'
-import { useEffect, useLayoutEffect, useState } from 'react'
-import { FormQuestionType } from 'types/form.ts'
-import {
-    FormSelectOptionType,
-    mapOfType,
-} from 'pages/Form/Components/FormSelect'
-import { ChevronIcon } from 'pages/QuestionEdit/chevron.tsx'
-import { Switch } from '../../components/Switch'
-import { FormPicker } from 'pages/Form/Components/FormSelect/picker.tsx'
-import { useParams } from 'react-router-dom'
-import { useEditFormState } from '../../atoms/editForm.ts'
-import { useBackButton } from '../../hooks/useBackButton.ts'
-import { DeleteIcon } from 'pages/Form/Components/FormElement/delete.tsx'
-import { Add } from '../../components/Add'
 
 const typeOptions: FormSelectOptionType[] = Object.entries(mapOfType).map(
     ([key, title]) => ({

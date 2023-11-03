@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { useTelegramWebApp } from '../../hooks/useTelegramWebApp.ts'
 import { RouterProvider } from 'react-router-dom'
-import { AppRouter } from '../../router.tsx'
 import { RecoilRoot } from 'recoil'
+import { useTelegramWebApp } from '../../hooks/useTelegramWebApp.ts'
+import { AppRouter } from '../../router.tsx'
 
 export const App = () => {
     const telegram = useTelegramWebApp()

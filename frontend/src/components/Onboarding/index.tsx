@@ -1,3 +1,5 @@
+import { useLottie } from 'lottie-react'
+import { FC } from 'react'
 import {
     OnboardingCreateForm,
     OnboardingDescription,
@@ -7,8 +9,6 @@ import {
 } from './styles.tsx'
 
 import reinbowAnimated from './rainbow.json'
-import { useLottie } from 'lottie-react'
-import { FC } from 'react'
 interface OnboardingProps {
     onCreate: () => void
 }

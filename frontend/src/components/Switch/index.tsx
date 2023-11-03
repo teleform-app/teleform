@@ -1,5 +1,5 @@
-import { SwitchButton, SwitchWrapper } from './styles.tsx'
 import { FC } from 'react'
+import { SwitchButton, SwitchWrapper } from './styles.tsx'
 
 interface SwitchProps {
     checked: boolean

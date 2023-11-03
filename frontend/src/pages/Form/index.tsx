@@ -13,20 +13,20 @@ import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { FormQuestionAnswer } from 'types/form.ts'
 import { FormElement } from 'pages/Form/Components/FormElement'
-import { isValidEmail, isValidPhoneNumber } from '../../utils/validators.ts'
 import { FormSubmitted } from 'pages/Form/Components/FormSubmited'
-import { useGetForm } from '../../hooks/useApi.ts'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useBackButton } from '../../hooks/useBackButton.ts'
-import { useTelegramWebApp } from '../../hooks/useTelegramWebApp.ts'
-import { useEditFormState } from '../../atoms/editForm.ts'
-import { Add } from '../../components/Add'
 import axios from 'axios'
-import { Share } from '../../components/Share'
 import { FormSaved } from 'pages/Form/Components/FormSaved'
 import { FormQuestionEditSeparator } from 'pages/QuestionEdit/styles.tsx'
 import { Export } from 'pages/Form/Components/Export'
 import { FormExported } from 'pages/Form/Components/FormExported'
+import { isValidEmail, isValidPhoneNumber } from '../../utils/validators.ts'
+import { useGetForm } from '../../hooks/useApi.ts'
+import { useBackButton } from '../../hooks/useBackButton.ts'
+import { useTelegramWebApp } from '../../hooks/useTelegramWebApp.ts'
+import { useEditFormState } from '../../atoms/editForm.ts'
+import { Add } from '../../components/Add'
+import { Share } from '../../components/Share'
 
 export const FormPage = () => {
     const { id } = useParams()
@@ -63,7 +63,7 @@ export const FormPage = () => {
                 return prevState
             })
         }
-    }, [data, isMyForm, setEditFormState])
+    }, [data, isMyForm, setEditFormState, telegram])
 
     const handleChange = (id: string, value: FormQuestionAnswer) => {
         setAnswers((prevState) => {

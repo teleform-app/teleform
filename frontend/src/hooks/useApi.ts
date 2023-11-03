@@ -34,13 +34,17 @@ export const useGetForm = (id: string) => {
                 return {
                     form: {
                         ...form,
-                        questions: form.questions.map((question: any) => {
-                            return {
-                                ...question,
-                                title: question.content.text,
-                                options: question.content.options,
+                        questions: form.questions.map(
+                            (question: {
+                                content: { text: string; options: string[] }
+                            }) => {
+                                return {
+                                    ...question,
+                                    title: question.content.text,
+                                    options: question.content.options,
+                                }
                             }
-                        }),
+                        ),
                     },
                 } as GetMyFormResponse
             })

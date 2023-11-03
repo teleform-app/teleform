@@ -1,15 +1,14 @@
+import { useLottie } from 'lottie-react'
+import { Form } from 'types/form.ts'
+import { FC } from 'react'
+import { Share } from '../../../../components/Share'
+import SubmittedAnimated from './submitted.json'
 import {
     FormSubmittedDescription,
     FormSubmittedIcon,
     FormSubmittedTitle,
     FormSubmittedWrapper,
 } from './styles.tsx'
-
-import SubmittedAnimated from './submitted.json'
-import { useLottie } from 'lottie-react'
-import { Share } from '../../../../components/Share'
-import { Form } from 'types/form.ts'
-import { FC } from 'react'
 interface FormSubmittedProps {
     form: Form
 }

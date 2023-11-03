@@ -1,3 +1,5 @@
+import { useLottie } from 'lottie-react'
+import okAnimated from '../FormSaved/ok.json'
 import {
     FormExportedDescription,
     FormExportedIcon,
@@ -5,8 +7,6 @@ import {
     FormExportedWrapper,
 } from './styles.tsx'
 
-import okAnimated from '../FormSaved/ok.json'
-import { useLottie } from 'lottie-react'
 export const FormExported = () => {
     const options = {
         animationData: okAnimated,
