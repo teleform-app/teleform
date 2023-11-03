@@ -1,27 +1,27 @@
 export interface Form {
-  id: string;
-  author: string;
-  title: string;
-  emoji: string;
-  response: number;
-  questions: FormQuestion[];
+    id: string
+    author: string
+    title: string
+    emoji: string
+    response: number
+    questions: FormQuestion[]
 }
 
-export type FormPreview = Pick<Form, "id" | "title" | "emoji" | "response">;
+export type FormPreview = Pick<Form, 'id' | 'title' | 'emoji' | 'response'>
 
 export type FormQuestionType =
-  | "regular_input"
-  | "name"
-  | "email"
-  | "phone"
-  | "select";
+    | 'regular_input'
+    | 'name'
+    | 'email'
+    | 'phone'
+    | 'select'
 export interface FormQuestion {
-  id: string;
-  type: FormQuestionType;
-  title: string;
-  mandatory?: boolean;
-  multichoice?: boolean;
-  options?: string[];
+    id: string
+    type: FormQuestionType
+    title: string
+    mandatory?: boolean
+    multichoice?: boolean
+    options?: string[]
 }
 
-export type FormQuestionAnswer = string | string[];
+export type FormQuestionAnswer = string | string[]

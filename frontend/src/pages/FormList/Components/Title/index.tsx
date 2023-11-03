@@ -1,17 +1,17 @@
-import { FC } from "react";
+import { FC } from 'react'
 import {
-  TitleText,
-  TitleWrapper,
-} from "pages/FormList/Components/Title/styles.tsx";
+    TitleText,
+    TitleWrapper,
+} from 'pages/FormList/Components/Title/styles.tsx'
 
 interface TitleProps {
-  text: string;
+    text: string
 }
 
 export const Title: FC<TitleProps> = ({ text }) => {
-  return (
-    <TitleWrapper>
-      <TitleText>{text}</TitleText>
-    </TitleWrapper>
-  );
-};
+    return (
+        <TitleWrapper>
+            <TitleText>{text}</TitleText>
+        </TitleWrapper>
+    )
+}

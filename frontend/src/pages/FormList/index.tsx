@@ -1,78 +1,55 @@
-import { Title } from "./Components/Title";
-import { useEffect, useState } from "react";
-import { List } from "./Components/List";
-import { useTelegramWebApp } from "../../hooks/useTelegramWebApp.ts";
-import { useNavigate } from "react-router-dom";
-import { useMyForms } from "../../hooks/useApi.ts";
-import { useBackButton } from "../../hooks/useBackButton.ts";
-import { useEditFormState } from "../../atoms/editForm.ts";
-import { NewForm } from "pages/FormList/Components/NewForm";
-import axios from "axios";
-import { Onboarding } from "../../components/Onboarding";
+import { Title } from './Components/Title'
+import { useEffect } from 'react'
+import { List } from './Components/List'
+import { useTelegramWebApp } from '../../hooks/useTelegramWebApp.ts'
+import { useNavigate } from 'react-router-dom'
+import { useMyForms } from '../../hooks/useApi.ts'
+import { useBackButton } from '../../hooks/useBackButton.ts'
+import { useEditFormState } from '../../atoms/editForm.ts'
+import { Onboarding } from '../../components/Onboarding'
 
 export const PollList = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data } = useMyForms()
 
-  const { data } = useMyForms();
+    const [, setEditFormState] = useEditFormState()
 
-  const [, setEditFormState] = useEditFormState();
-  const [isCreating, setIsCreating] = useState(false);
+    const telegram = useTelegramWebApp()
+    const navigate = useNavigate()
 
-  const telegram = useTelegramWebApp();
-  const navigate = useNavigate();
+    useBackButton(true)
 
-  useBackButton(true);
+    useEffect(() => {
+        const { start_param } = telegram.initDataUnsafe
+        if (start_param) {
+            window.location.href = `/form/${start_param}`
+        }
+    }, [telegram])
 
-  useEffect(() => {
-    const { start_param } = telegram.initDataUnsafe;
-    if (start_param) {
-      window.location.href = `/form/${start_param}`;
+    useEffect(() => {
+        setEditFormState({
+            form: undefined,
+        })
+    }, [setEditFormState])
+
+    const onCreateClick = () => {
+        telegram?.expand()
+        navigate('/create')
     }
-  }, [telegram]);
 
-  useEffect(() => {
-    setEditFormState({
-      form: undefined,
-    });
-  }, [setEditFormState]);
+    if (data === undefined) {
+        return null
+    }
 
-  const onCreate = (title: string) => {
-    axios
-      .post("/api/createForm", {
-        title,
-      })
-      .then(({ data }) => {
-        navigate(`/form/${data.form.id}`);
-      });
-  };
-
-  const onCreateClick = () => {
-    setIsCreating(true);
-    telegram?.expand();
-  };
-
-  if (data === undefined) {
-    return null;
-  }
-
-  return (
-    <div>
-      {isCreating && (
-        <NewForm
-          onClose={() => {
-            setIsCreating(false);
-          }}
-          onCreate={onCreate}
-        />
-      )}
-      {data.forms.length > 0 ? (
-        <>
-          <Title text={"My forms"} />
-          <List list={data.forms} onCreate={onCreateClick} />
-        </>
-      ) : (
-        <Onboarding onCreate={onCreateClick} />
-      )}
-    </div>
-  );
-};
+    return (
+        <div>
+            {data.forms.length > 0 ? (
+                <>
+                    <Title text={'My forms'} />
+                    <List list={data.forms} onCreate={onCreateClick} />
+                </>
+            ) : (
+                <Onboarding onCreate={onCreateClick} />
+            )}
+        </div>
+    )
+}
