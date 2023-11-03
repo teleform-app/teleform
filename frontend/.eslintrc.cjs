@@ -8,7 +8,7 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    plugins: ['react-refresh', 'prettier'],
+    plugins: ['react-refresh', 'prettier', 'import'],
     rules: {
         'react-refresh/only-export-components': [
             'warn',
@@ -20,6 +20,18 @@ module.exports = {
                 endOfLine: 'auto',
             },
         ],
-        'import/order': ['warning'],
+        'import/order': [
+            'error',
+            {
+                groups: [
+                    'builtin',
+                    'external',
+                    'internal',
+                    'parent',
+                    'sibling',
+                    'index',
+                ],
+            },
+        ],
     },
 }

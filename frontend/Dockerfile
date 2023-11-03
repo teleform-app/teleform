@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm install
+RUN corepack enable
+RUN pnpm install
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
