@@ -1,5 +1,4 @@
 import { useLottie } from 'lottie-react'
-import { Form } from 'types/form.ts'
 import { FC } from 'react'
 import { Share } from '../../../../components/Share'
 import SubmittedAnimated from './submitted.json'
@@ -10,9 +9,9 @@ import {
     FormSubmittedWrapper,
 } from './styles.tsx'
 interface FormSubmittedProps {
-    form: Form
+    formId: string
 }
-export const FormSubmitted: FC<FormSubmittedProps> = ({ form }) => {
+export const FormSubmitted: FC<FormSubmittedProps> = ({ formId }) => {
     const options = {
         animationData: SubmittedAnimated,
         loop: true,
@@ -27,7 +26,7 @@ export const FormSubmitted: FC<FormSubmittedProps> = ({ form }) => {
             <FormSubmittedDescription>
                 You can close this window now, answers are saved
             </FormSubmittedDescription>
-            <Share title={form.title} id={form.id} />
+            <Share id={formId} />
         </FormSubmittedWrapper>
     )
 }

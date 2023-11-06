@@ -21,7 +21,7 @@ export const PollList = () => {
     useEffect(() => {
         const { start_param } = telegram.initDataUnsafe
         if (start_param) {
-            window.location.href = `/form/${start_param}`
+            navigate(`/form/${start_param}`, { replace: true })
         }
     }, [telegram])
 

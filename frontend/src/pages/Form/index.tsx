@@ -13,13 +13,11 @@ import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { FormQuestionAnswer } from 'types/form.ts'
 import { FormElement } from 'pages/Form/Components/FormElement'
-import { FormSubmitted } from 'pages/Form/Components/FormSubmited'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { FormSaved } from 'pages/Form/Components/FormSaved'
 import { FormQuestionEditSeparator } from 'pages/QuestionEdit/styles.tsx'
 import { Export } from 'pages/Form/Components/Export'
-import { FormExported } from 'pages/Form/Components/FormExported'
+import { Status } from 'types/status.ts'
 import { isValidEmail, isValidPhoneNumber } from '../../utils/validators.ts'
 import { useGetForm } from '../../hooks/useApi.ts'
 import { useBackButton } from '../../hooks/useBackButton.ts'
@@ -36,18 +34,16 @@ export const FormPage = () => {
         {}
     )
     const [showError, setShowError] = useState<boolean>(false)
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-    const [isSaved, setIsSaved] = useState<boolean>(false)
-    const [isExported, setIsExported] = useState<boolean>(false)
 
     const [editForm, setEditFormState] = useEditFormState()
 
     const navigate = useNavigate()
 
     const telegram = useTelegramWebApp()
-    useBackButton(false)
 
-    const isMyForm = data?.form?.author === telegram.initDataUnsafe.user.id
+    const isMyForm = data?.form?.author === telegram.initDataUnsafe?.user?.id
+
+    useBackButton(!isMyForm)
 
     useEffect(() => {
         if (data && isMyForm) {
@@ -114,7 +110,7 @@ export const FormPage = () => {
                 })),
             })
             .then(() => {
-                setIsSubmitted(true)
+                navigate(`/status/${Status.submitted}`, { replace: true })
             })
     }
 
@@ -154,7 +150,7 @@ export const FormPage = () => {
                 }),
             })
             .then(() => {
-                setIsSaved(true)
+                navigate(`/status/saved`)
             })
     }
 
@@ -197,13 +193,9 @@ export const FormPage = () => {
                 format: 'csv',
             })
             .then(() => {
-                setIsExported(true)
+                navigate(`/status/${Status.exported}`)
             })
     }
-
-    if (isSubmitted) return <FormSubmitted form={form} />
-    if (isSaved) return <FormSaved form={form} />
-    if (isExported) return <FormExported />
 
     return (
         <FormWrapper>
@@ -229,7 +221,7 @@ export const FormPage = () => {
                         Save
                     </FormButton>
                     <FormActions>
-                        <Share title={form.title} id={form.id} />
+                        <Share id={form.id} />
                         <FormDelete onClick={deleteForm}>
                             Delete form
                         </FormDelete>

@@ -82,6 +82,9 @@ devDependencies:
   react-router-dom:
     specifier: ^6.16.0
     version: 6.16.0(react-dom@18.2.0)(react@18.2.0)
+  telegram-webapps:
+    specifier: ^6.9.0
+    version: 6.9.0
   typescript:
     specifier: ^5.0.2
     version: 5.2.2
@@ -4057,6 +4060,10 @@ packages:
     dependencies:
       '@pkgr/utils': 2.4.2
       tslib: 2.6.2
+    dev: true
+
+  /telegram-webapps@6.9.0:
+    resolution: {integrity: sha512-z7TPQzJi/hrqcLzOd2ThzyrGgFN8+9XKvC6RMzeZ+QXUg4cmppiPPbyFEYLoxcRDz6pZ0x1NGfNqskIBG9rVWQ==}
     dev: true
 
   /text-table@0.2.0:

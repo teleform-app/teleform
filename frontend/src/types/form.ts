@@ -1,6 +1,6 @@
 export interface Form {
     id: string
-    author: string
+    author: number
     title: string
     emoji: string
     response: number

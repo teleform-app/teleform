@@ -3,7 +3,6 @@ import { useIsMobile } from '../../utils/isMobile.ts'
 import { FormShareWrapper } from './styles.tsx'
 
 interface ShareProps {
-    title: string
     id: string
 }
 

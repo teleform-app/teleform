@@ -1,7 +1,6 @@
 import { useLottie } from 'lottie-react'
-import { Form } from 'types/form.ts'
 import { FC } from 'react'
-import { Share } from '../../../../components/Share'
+import { Share } from 'components/Share'
 import okAnimated from './ok.json'
 import {
     FormSavedDescription,
@@ -10,9 +9,9 @@ import {
     FormSavedWrapper,
 } from './styles.tsx'
 interface FormSavedProps {
-    form: Form
+    formId: string
 }
-export const FormSaved: FC<FormSavedProps> = ({ form }) => {
+export const FormSaved: FC<FormSavedProps> = ({ formId }) => {
     const options = {
         animationData: okAnimated,
         loop: true,
@@ -27,7 +26,7 @@ export const FormSaved: FC<FormSavedProps> = ({ form }) => {
             <FormSavedDescription>
                 Now share it with your respondents!
             </FormSavedDescription>
-            <Share title={form.title} id={form.id} />
+            <Share id={formId} />
         </FormSavedWrapper>
     )
 }

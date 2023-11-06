@@ -3,6 +3,7 @@ import { PollList } from 'pages/FormList'
 import { FormPage } from 'pages/Form'
 import { QuestionEdit } from 'pages/QuestionEdit'
 import { CreateForm } from 'pages/FormCreate'
+import { StatusPage } from 'pages/Status'
 export const AppRouter = createBrowserRouter([
     {
         path: '/',
@@ -19,5 +20,9 @@ export const AppRouter = createBrowserRouter([
     {
         path: '/questionEdit/:id',
         element: <QuestionEdit />,
+    },
+    {
+        path: '/status/:status',
+        element: <StatusPage />,
     },
 ])

@@ -21,8 +21,13 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "pages/*": ["./src/pages/*"],
-      "types/*": ["./src/types/*"]
-    }
+      "types/*": ["./src/types/*"],
+      "components/*": ["./src/components/*"],
+      "hooks/*": ["./src/hooks/*"]
+    },
+    "typeRoots": [
+      "./node_modules/telegram-webapps"
+    ]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
